@@ -302,11 +302,40 @@ header.masthead p {
   border-color: #218c74;
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+#overrides .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
   color: #fff;
-  background-color: #33d9b2 !important;
+  background-color: #33d9b2;
 }
 
 .btn-primary:active, .btn-primary:focus {
   box-shadow: 0 0 0 0.2rem rgba(240, 95, 64, 0.5) !important;
+}
+
+#overrides .nav-link {
+	background-color: #ffffff;
+	color: #ffb142;
+	font-weight: 700;
+    font-family: 'Roboto', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+#overrides .nav-link:active {
+	background-color: #218c74;
+	color: #ffffff;
+	font-weight: 700;
+    font-family: 'Roboto', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+#overrides .dropdown-toggle:active {
+	background-color: #218c74;
+    font-family: 'Roboto', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+#overrides .nav-item:active {
+	background-color: #218c74;
+}
+
+#overrides .tab-pane {
+	background-color: #f5f5f4;
+    padding: 30px 30px;
+	
 }
