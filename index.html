@@ -29,7 +29,7 @@
 
   </head>
 
-  <body id="overrides">
+  <body>
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -50,7 +50,7 @@
               <a class="nav-link js-scroll-trigger" href="#viz">Visualizations</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+              <a class="nav-link js-scroll-trigger" href="#info">Acknowledgements</a>
             </li>
           </ul>
         </div>
@@ -67,7 +67,7 @@
             <hr>
           </div>
           <div class="col-lg-8 mx-auto">
-            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">HELL YEAH</a>
+            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">HECK YEAH</a>
           </div>
         </div>
       </div>
@@ -77,7 +77,8 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <p class="text-faded mb-4">The catalogs provided here are results of cross-matching with CDS. Here are some caveats. Here are some links for more information about Gaia and Kepler. If you make use of this website in a publication, please cite like so.</p>
+			<p class="text-faded mb-4"><b>This website provides</b> cross-matched catalogs of <i>Gaia</i> data for stars observed by <i>Kepler</i>/<i>K2</i>.</p>
+
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#data">GIMME DATA</a>
           </div>
         </div>
@@ -95,7 +96,7 @@
       </div>
       <div class="container">
 		<!-- Nav pills -->
-		<ul class="nav nav-pills nav-justified">
+		<ul class="nav nav-pills nav-justified" id="overrides">
 		  <li class="nav-item">
 		    <a class="nav-link active" href="#kepler" data-toggle="pill" id="overrides">Kepler</a>
 		  </li>
@@ -111,7 +112,7 @@
 		  </li>
 		</ul>
 		<!-- Pill panes -->
-		<div class="tab-content">
+		<div class="tab-content" id="overrides">
 		  <div class="tab-pane active" id="kepler" role="tabpanel" aria-labelledby="home-tab">
 			  <div class="row">
 	           <div class="col-lg-12 text-center">
@@ -191,31 +192,41 @@
       </div>
     </section>
 
-    <section id="contact">
+    <section id="info">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading">Contact</h2>
+            <h2 class="section-heading">Acknowledgements</h2>
             <hr class="my-4">
-            <p class="mb-5">Questions? Complaints? Compliments?</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4 ml-auto text-center">
-			  <i class="fa fa-twitter fa-3x mb-3 sr-contact"></i>
-            <p>
-			<a href="https://www.twitter.com/meg_bedell">@meg_bedell</a>
-			</p>
-          </div>
-          <div class="col-lg-4 mr-auto text-center">
-            <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
-            <p>
-              <a href="mailto:mbedell@flatironinstitute.org">mbedell@flatironinstitute.org</a>
-            </p>
+            <p class="mb-4">The data provided on this website come from the European Space Agency (ESA)
+mission <a href="https://www.cosmos.esa.int/gaia"><i>Gaia</i></a>, processed by
+the <i>Gaia</i>
+<a href="https://www.cosmos.esa.int/web/gaia/dpac/consortium">Data Processing and Analysis Consortium (DPAC)</a>. Funding
+for the DPAC has been provided by national institutions, in particular
+the institutions participating in the <i>Gaia</i> Multilateral Agreement.</p>
+			<p class="mb-4">Data on this website also come from the <i>Kepler</i> and <i>K2</i> missions, funding for which is provided by the NASA Science Mission directorate. Access to these catalogs was provided by the <a href="https://exoplanetarchive.ipac.caltech.edu">NASA Exoplanet Archive</a>, which is operated by the California Institute of Technology, under contract with the National Aeronautics and Space Administration under the Exoplanet Exploration Program.</p>
+			<p class="mb-4">We use the cross-match service and Vizier catalogue access tool provided by CDS, Strasbourg, France. We also use the <a href="https://doi.org/10.5281/zenodo.44961">astroquery</a> python package.</p>
+            <p class="mb-4">If you make use of this website in a publication, please cite like so.</p>
+            <p class="mb-4">Questions? Complaints? Compliments? <a href="mailto:mbedell@flatironinstitute.org">Email</a> or <a href="https://www.twitter.com/meg_bedell">tweet</a> us!</p>
           </div>
         </div>
       </div>
     </section>
+	
+	<!-- 
+	<section id="footer">
+        <div class="container">
+          <div class="row">
+			  <div class="col-lg-4 ml-auto text-center">
+			  <img class="img-fluid" src="img/flatiron.png" alt=""></img>
+		  	  </div>
+			  <div class="col-lg-4 ml-auto text-center">
+			  <img class="img-fluid" src="img/cds-xmatch.png" alt=""></img>
+		  	  </div>
+	      </div>
+	    </div>
+	</section>
+	 -->
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
