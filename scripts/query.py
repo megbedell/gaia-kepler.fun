@@ -4,7 +4,7 @@ from astropy import units as u
 from astropy.io import fits, ascii
 from astropy.utils.data import download_file
 from astroquery.xmatch import XMatch
-from astropy.table import Table, Column, MaskedColumn, join
+from astropy.table import Table, Column, MaskedColumn, join, unique
 import pandas as pd
 from tqdm import tqdm
 
@@ -173,7 +173,6 @@ if __name__ == "__main__":
     lc_xmatch_table = xmatch_cds_from_csv(lc_file, ra_name='RA', dec_name='Dec', dist=dist, cat=cat)
     lc_table = join(lc_xmatch_table, lc_nasa_table, keys='kepid', table_names=['gaia', 'nasa'], 
                     join_type='left')
-    save_output(lc_table, '../data/lc_{c}_{d}arcsec'.format(d=dist, c=cat))    
     
     if make_plots:  # plots 
         print('making LC plots...')
@@ -189,52 +188,28 @@ if __name__ == "__main__":
         plt.xlabel('Angular Dist (arcsec)')
         plt.savefig('lc_{c}_angdist_{d}arcsec.png'.format(d=dist, c=cat))
         plt.clf()
-    
-    
-    # OG Kepler short-cadence targets:
-    print('assembling SC table...')
-    sc_file = 'kepler_sc_kicnames.txt'
-    sc_names = np.genfromtxt(sc_file, delimiter=',', unpack=True, dtype='int64')
-    sc_table = lc_table.copy()
-    delete = []
-    for i in tqdm(range(len(sc_table))):
-        if not sc_table['kepid'][i] in sc_names:
-            delete.append(i)
-    sc_table.remove_rows(delete)
-    save_output(sc_table, '../data/sc_{c}_{d}arcsec'.format(d=dist, c=cat))
-    
-    
-    if make_plots:
-        print('making SC plots...')
-        sc_matches = [np.sum(sc_table['kepid'] == k) for k in tqdm(sc_names)]
-        plt.hist(sc_matches)
-        plt.ylabel('Sources')
-        plt.xlabel('Matches')
-        plt.savefig('sc_{c}_matches_{d}arcsec.png'.format(d=dist, c=cat))
-        plt.clf()
-    
-    
-        plt.hist(sc_table['angDist'], bins=np.arange(0.,dist,0.1))
-        plt.ylabel('Sources')
-        plt.xlabel('Angular Dist (arcsec)')
-        plt.savefig('sc_{c}_angdist_{d}arcsec.png'.format(d=dist, c=cat))
-        plt.clf()
         
-    # OG Kepler KOIs:
-    #kois_table = NasaExoplanetArchive.get_kois_table()
-    #alias_table = get_alias_table(select='kepid,kepoi_name')
+    # flag KOIs and confirmed hosts:
+    full_alias_table = get_alias_table()
+    alias_table = unique(full_alias_table, keys='kepid')
+    alias_table_to_join = alias_table['kepid', 'kepoi_name']
+    lc_table = join(lc_table, alias_table_to_join, keys='kepid', join_type='left')
+    lc_table['planet?'] = 'none'
+    lc_table['planet?'][~lc_table['kepoi_name'].mask] = 'candidate'
+    # TODO: flag confirmed
+    
+    save_output(lc_table, '../data/lc_{c}_{d}arcsec'.format(d=dist, c=cat))    
     
     
-    # OG Kepler confirmed planets:
-    print('assembling Kepler confirmed planets table...')
+    # confirmed planets:
+    print('assembling confirmed planets table...')
     select = 'pl_hostname,pl_letter,pl_discmethod,pl_pnum,pl_orbper,pl_orbsmax,pl_orbeccen'
     select += ',pl_bmassj,pl_radj,pl_dens,pl_eqt,pl_insol'
     confirmed_nasa_table = get_confirmed_planets_table(select=select)
     
-    alias_table = get_alias_table(select='kepid,alt_name')
     star_names = [n.split(" ")[0] for n in alias_table['alt_name']] # HACK - might be losing some?
-    # TODO: test/debug on KOI-351
     alias_table['pl_hostname'] = star_names
+    alias_table.remove_column('alt_name')
     confirmed_nasa_table_with_kepid = join(confirmed_nasa_table, alias_table, keys='pl_hostname',
                                 join_type='inner') # add KIC numbers, remove non-Kepler hosts
     confirmed_table = join(confirmed_nasa_table_with_kepid, lc_table, keys='kepid', 
@@ -257,9 +232,6 @@ if __name__ == "__main__":
         plt.savefig('confirmed_{c}_angdist_{d}arcsec.png'.format(d=dist, c=cat))
         plt.clf()
     
-
-    
-    # Kepler FOV:
     
     
     

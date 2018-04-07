@@ -54,10 +54,10 @@
               <a class="nav-link js-scroll-trigger" href="#about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#data">Data</a>
+              <a class="nav-link js-scroll-trigger" href="#kepler">Kepler</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#viz">Visualizations</a>
+              <a class="nav-link js-scroll-trigger" href="#k2">K2</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#info">Acknowledgements</a>
@@ -88,116 +88,46 @@
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
 			<p class="text-faded mb-4"><b>This website provides</b> cross-matched catalogs of <i>Gaia</i> data for stars observed by <i>Kepler</i>/<i>K2</i>.</p>
-
-            <a class="btn btn-light btn-xl js-scroll-trigger" href="#data">GIMME DATA</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="data">
+    <section id="kepler">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading">DATA</h2>
+            <h2 class="section-heading">KEPLER</h2>
             <hr class="my-4">
+			<p class="mb-4">
+				Here's a subset of Kepler stars observed by Gaia in DR1!
+			</p>
+			<p class="mb-4">
+				Zoom & scroll in the left panel. Hold down shift and draw a rectangle in either panel to select a subset. Shift-drag the rectangle to a new spot or shift-click elsewhere to make it go away.
+			</p>
+
           </div>
+		  <div class="embed-responsive embed-responsive-16by9">
+  			<iframe class="embed-responsive-item" src="scripts/kepler_tgas_demo.html" allowfullscreen></iframe>
+		</div>
+        <div class="col-lg-12 text-center">
+		<p class="mb-4">
+			<b>DOWNLOAD:</b> <i>coming soon</i>
+		</p>
         </div>
       </div>
-      <div class="container">
-		<!-- Nav pills -->
-		<ul class="nav nav-pills nav-justified" id="overrides">
-		  <li class="nav-item">
-		    <a class="nav-link active" href="#kepler" data-toggle="pill" id="overrides">Kepler</a>
-		  </li>
-		  <li class="nav-item dropdown">
-		      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">K2</a>
-		      <div class="dropdown-menu">
-		        <a class="dropdown-item" href="#k2-c1" data-toggle="pill">Campaign 1</a>
-		        <a class="dropdown-item" href="#k2-c2" data-toggle="pill">Campaign 2</a>
-		        <a class="dropdown-item" href="#k2-c3" data-toggle="pill">Campaign 3</a>
-		        <div class="dropdown-divider"></div>
-		        <a class="dropdown-item" href="#k2-all" data-toggle="pill">All Campaigns</a>
-		      </div>
-		  </li>
-		</ul>
-		<!-- Pill panes -->
-		<div class="tab-content" id="overrides">
-		  <div class="tab-pane active" id="kepler" role="tabpanel" aria-labelledby="home-tab">
-			  <div class="row">
-	           <div class="col-lg-12 text-center">
-			    <h4>KEPLER</h4>
-				<a class="btn btn-primary" href="#" role="button">Short-Cadence</a>
-				<a class="btn btn-primary" href="#" role="button">Long-Cadence</a>
-				<a class="btn btn-primary" href="#" role="button">Full Field-of-view</a>
-		  	   </div>
-		  	  </div>
-		  </div>
-		  <div class="tab-pane" id="k2-c1" role="tabpanel">
-			  <h3>K2 Campaign 1</h3>
-		  </div>
-		  <div class="tab-pane" id="k2-c2" role="tabpanel">
-			  <h3>K2 Campaign 2</h3>
-		  </div>
-		  <div class="tab-pane" id="k2-c3" role="tabpanel">
-			  <h3>K2 Campaign 3</h3>
-		  </div>
-		  <div class="tab-pane" id="k2-all" role="tabpanel">
-			  <h3>K2 (all campaigns)</h3>
-		  </div>
-		</div>
-		</div>
-      </div>
     </section>
+	
+    <section id="k2">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">K2</h2>
+            <hr class="my-4">
 
-    <section class="p-0" id="viz">
-      <div class="container-fluid p-0">
-        <div class="row no-gutters popup-gallery">
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="...">
-              <img class="img-fluid" src="img/thumbnail.jpg" alt="">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Viz
-                  </div>
-                  <div class="project-name">
-                    COMING SOON
-                  </div>
-                </div>
-              </div>
-            </a>
           </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="...">
-              <img class="img-fluid" src="img/thumbnail.jpg" alt="">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Viz
-                  </div>
-                  <div class="project-name">
-                    COMING SOON
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="...">
-              <img class="img-fluid" src="img/thumbnail.jpg" alt="">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    Viz
-                  </div>
-                  <div class="project-name">
-                    COMING SOON
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
+		  <div class="embed-responsive embed-responsive-16by9">
+		</div>
         </div>
       </div>
     </section>
@@ -216,8 +146,10 @@ for the DPAC has been provided by national institutions, in particular
 the institutions participating in the <i>Gaia</i> Multilateral Agreement.</p>
 			<p class="mb-4">Data on this website also come from the <i>Kepler</i> and <i>K2</i> missions, funding for which is provided by the NASA Science Mission directorate. Access to these catalogs was provided by the <a href="https://exoplanetarchive.ipac.caltech.edu">NASA Exoplanet Archive</a>, which is operated by the California Institute of Technology, under contract with the National Aeronautics and Space Administration under the Exoplanet Exploration Program.</p>
 			<p class="mb-4">We use the cross-match service and Vizier catalogue access tool provided by CDS, Strasbourg, France. We also use the <a href="https://doi.org/10.5281/zenodo.44961">astroquery</a> python package.</p>
+			<p class="mb-4">Plots were made with the <a href="https://altair-viz.github.io/index.html">Altair</a> package.</p>
             <p class="mb-4">If you make use of this website in a publication, please cite like so.</p>
             <p class="mb-4">Questions? Complaints? Compliments? <a href="mailto:mbedell@flatironinstitute.org">Email</a> or <a href="https://www.twitter.com/meg_bedell">tweet</a> us!</p>
+            <p class="mb-4">Thanks for reading this. <a href="https://openpuppies.com">Here, have a puppy.</a></p>
           </div>
         </div>
       </div>
