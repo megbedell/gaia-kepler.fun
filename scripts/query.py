@@ -8,15 +8,18 @@ from astropy.table import Table, Column, MaskedColumn, join
 import pandas as pd
 from tqdm import tqdm
 
+STELLAR_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
+                      'nstedAPI/nph-nstedAPI?table=q1_q17_dr25_stellar')
+ALIAS_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
+                      'nstedAPI/nph-nstedAPI?table=keplernames')
 EXOPLANETS_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
                       'nstedAPI/nph-nstedAPI?table=exoplanets')
 KOIS_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
                       'nstedAPI/nph-nstedAPI?table=q1_q17_dr25_koi')
-STELLAR_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
-                      'nstedAPI/nph-nstedAPI?table=q1_q17_dr25_stellar')
+
                       
 def get_table(url=None, cache=True, show_progress=True,
-                            table_path=None, ra_str=True):
+                    table_path=None, select=None):
     """
     Download (and optionally cache) a table from the `NExScI Exoplanet Archive 
                                 <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -33,15 +36,18 @@ def get_table(url=None, cache=True, show_progress=True,
     table_path : str (optional)
         Path to a local table file. Default `None` will trigger a
         download of the table from the internet.
-    ra_str : bool (optional)
-        Internal flag indicating which table columns to use for
-        sky coordinates.
+    select : str (optional)
+        Comma-separated, no spaces string indicating columns to be
+        returned. Default `None` will select all default columns
+        as set by the Exoplanet Archive API.
     Returns
     -------
     table : `~astropy.table`
         Astropy table of requested data.
     """
     if table_path is None:
+        if not select is None:
+            url += '&select='+select
         table_path = download_file(url, cache=cache,
                                    show_progress=show_progress,
                                    timeout=120)
@@ -51,7 +57,7 @@ def get_table(url=None, cache=True, show_progress=True,
 
     
 def get_confirmed_planets_table(cache=True, show_progress=True,
-                                table_path=None):
+                                table_path=None, select=None):
     """
     Download (and optionally cache) the `NExScI Exoplanet Archive Confirmed
     Planets table <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -62,20 +68,22 @@ def get_confirmed_planets_table(cache=True, show_progress=True,
     """
     exoplanet_table = get_table(url=EXOPLANETS_CSV_URL, cache=cache, 
                                     show_progress=show_progress, 
-                                    table_path=table_path)
+                                    table_path=table_path, select=select)
 
+    
     # Store column of lowercase names for indexing:
     lowercase_names = [host_name.lower().replace(' ', '') + letter
                        for host_name, letter in
                        zip(exoplanet_table['pl_hostname'].data,
                            exoplanet_table['pl_letter'].data)]
-    exoplanet_table['NAME_LOWERCASE'] = lowercase_names
-    exoplanet_table.add_index('NAME_LOWERCASE')
+    exoplanet_table['pl_name'] = lowercase_names
+    exoplanet_table.add_index('pl_name')
+    
     
     return exoplanet_table
     
 def get_kois_table(cache=True, show_progress=True,
-                                table_path=None):
+                            table_path=None, select=None):
     """
     Download (and optionally cache) the `NExScI Exoplanet Archive Kepler
     Objects of Interest table <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -84,14 +92,15 @@ def get_kois_table(cache=True, show_progress=True,
     description of the columns can be found `here
     <https://exoplanetarchive.ipac.caltech.edu/docs/API_kepcandidate_columns.html>`_
     """
+    select = None
     koi_table = get_table(url=KOIS_CSV_URL, cache=cache, 
                                         show_progress=show_progress, 
-                                        table_path=table_path)
+                                        table_path=table_path, select=select)
     
     return koi_table
     
 def get_keplerstellar_table(cache=True, show_progress=True,
-                                table_path=None):
+                                table_path=None, select=None):
     """
     Download (and optionally cache) the `NExScI Exoplanet Archive Kepler
     Stellar table <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -100,11 +109,27 @@ def get_keplerstellar_table(cache=True, show_progress=True,
     description of the columns can be found `here
     <https://exoplanetarchive.ipac.caltech.edu/docs/API_keplerstellar_columns.html>`_
     """
+    select = None
     keplerstellar_table = get_table(url=STELLAR_CSV_URL, cache=cache, 
                                         show_progress=show_progress, 
-                                        table_path=table_path, ra_str=False)
+                                        table_path=table_path, select=select)
     
     return keplerstellar_table
+    
+def get_alias_table(cache=True, show_progress=True,
+                                table_path=None, select=None):
+    """
+    Download (and optionally cache) the `NExScI Exoplanet Archive Kepler
+    Names table <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
+
+    A full description of the columns can be found `here
+    <https://exoplanetarchive.ipac.caltech.edu/docs/API_keplernames_columns.html>`_
+    """
+    alias_table = get_table(url=ALIAS_CSV_URL, cache=cache, 
+                                        show_progress=show_progress, 
+                                        table_path=table_path, select=select)
+    
+    return alias_table
 
 def xmatch_cds_from_csv(file, ra_name='RA', dec_name='Dec', dist=5, cat='src'):
     """
@@ -124,7 +149,7 @@ def save_output(table, filename):
     df.to_hdf(filename+'.h5', 'data', mode='w')
     
 if __name__ == "__main__":
-    dist = 3 # arcsec radius of query
+    dist = 1 # arcsec radius of query
     cat = 'src' # 'src' or 'tgas'
     remake_csvs = False
     make_plots = True
@@ -197,31 +222,29 @@ if __name__ == "__main__":
         
     # OG Kepler KOIs:
     #kois_table = NasaExoplanetArchive.get_kois_table()
+    #alias_table = get_alias_table(select='kepid,kepoi_name')
     
     
     # OG Kepler confirmed planets:
-    confirmed_file = 'kepler_confirmed_coords.csv'
-    confirmed_nasa_table = get_confirmed_planets_table()
-    name = confirmed_nasa_table['NAME_LOWERCASE']
+    print('assembling Kepler confirmed planets table...')
+    select = 'pl_hostname,pl_letter,pl_discmethod,pl_pnum,pl_orbper,pl_orbsmax,pl_orbeccen'
+    select += ',pl_bmassj,pl_radj,pl_dens,pl_eqt,pl_insol'
+    confirmed_nasa_table = get_confirmed_planets_table(select=select)
     
-    if remake_csvs: # make the file
-        print('making confirmed planets file...')
-        ra, dec = confirmed_nasa_table['ra'], confirmed_nasa_table['dec']
-        f = open(confirmed_file, 'w')
-        f.write('NAME_LOWERCASE, RA, Dec\n')
-        for n,(r,d) in tqdm(zip(name, zip(ra, dec))):
-            f.write('{0}, {1:.8f}, {2:.8f}\n'.format(n, r, d))
-        f.close()
-        print('file made')
-    
-    confirmed_xmatch_table = xmatch_cds_from_csv(confirmed_file, ra_name='RA', dec_name='Dec', dist=dist, cat=cat)
-    confirmed_table = join(confirmed_xmatch_table, confirmed_nasa_table, keys='NAME_LOWERCASE', 
-                            table_names=['gaia', 'nasa'], join_type='left')
+    alias_table = get_alias_table(select='kepid,alt_name')
+    star_names = [n.split(" ")[0] for n in alias_table['alt_name']] # HACK - might be losing some?
+    # TODO: test/debug on KOI-351
+    alias_table['pl_hostname'] = star_names
+    confirmed_nasa_table_with_kepid = join(confirmed_nasa_table, alias_table, keys='pl_hostname',
+                                join_type='inner') # add KIC numbers, remove non-Kepler hosts
+    confirmed_table = join(confirmed_nasa_table_with_kepid, lc_table, keys='kepid', 
+                            join_type='left') # add Gaia results
     save_output(confirmed_table, '../data/confirmed_{c}_{d}arcsec'.format(d=dist, c=cat))
     
     if make_plots:  # plots 
         print('making confirmed planets plots...')
-        confirmed_matches = [np.sum(confirmed_table['NAME_LOWERCASE'] == n) for n in tqdm(name)]
+        name = confirmed_nasa_table['pl_name']
+        confirmed_matches = [np.sum(confirmed_table['pl_name'] == n) for n in tqdm(name)]
         plt.hist(confirmed_matches)
         plt.ylabel('Sources')
         plt.xlabel('Matches')
@@ -233,9 +256,6 @@ if __name__ == "__main__":
         plt.xlabel('Angular Dist (arcsec)')
         plt.savefig('confirmed_{c}_angdist_{d}arcsec.png'.format(d=dist, c=cat))
         plt.clf()
-    
-    kep_mask = confirmed_table['pl_kepflag'] == 1
-    k2_mask = confirmed_table['pl_k2flag'] == 1
     
 
     
