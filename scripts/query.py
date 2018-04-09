@@ -181,6 +181,22 @@ def save_output(table, filename):
     df = table.to_pandas()
     df.to_hdf(filename+'.h5', 'data', mode='w')
     
+def save_plot_data(table, filename, subsample_size=4999):
+    df = table.to_pandas()
+    N_tot = len(df)
+    subsample_ind = np.random.permutation(np.arange(N_tot))[:subsample_size] # random values, no duplication
+    subsample = pd.DataFrame(df.iloc[list(subsample_ind)])
+    try:
+        gmk = subsample['phot_g_mean_mag'] - subsample['kepmag']
+    except:
+        gmk = subsample['phot_g_mean_mag'] - subsample['k2_kepmag']
+    subsample['gaiamag_minus_kepmag'] = gmk
+    dist = 1.e3/subsample['parallax'] # distance in pc
+    subsample['dist'] = dist
+    abs_gmag = subsample['phot_g_mean_mag'] - 5.*(np.log10(dist) - 1.)
+    subsample['abs_gmag'] = abs_gmag
+    subsample.to_csv(filename+'_subsample.csv', mode='w')
+    
 if __name__ == "__main__":
     dist = 1 # arcsec radius of query
     cat = 'tgas' # 'src' or 'tgas'
@@ -231,7 +247,9 @@ if __name__ == "__main__":
     lc_table['planet?'][~lc_table['kepoi_name'].mask] = 'candidate'
     # TODO: flag confirmed
     
-    save_output(lc_table, '../data/lc_{c}_{d}arcsec'.format(d=dist, c=cat))    
+    save_output(lc_table, '../data/lc_{c}_{d}arcsec'.format(d=dist, c=cat)) 
+    save_plot_data(lc_table, '../data/plot_lc_{c}_{d}arcsec'.format(d=dist, c=cat))    
+       
     
     # K2 targets:
     k2_file = 'epic_coords.csv'  
@@ -239,7 +257,7 @@ if __name__ == "__main__":
     #select += ',k2_teff,k2_tefferr1,k2_tefferr2,k2_logg,k2_loggerr1,k2_loggerr2'
     #select += ',k2_metfe,k2_metfeerr1,k2_metfeerr2,k2_rad,k2_raderr1,k2_raderr2'
     #select += ',k2_mass,k2_masserr1,k2_masserr2'
-    select=None
+    select = None
     k2_nasa_table = get_k2targets_table(select=select)
     epic = k2_nasa_table['epic_number']
      
@@ -283,6 +301,7 @@ if __name__ == "__main__":
     k2_table = join(k2_table, k2cand_table_to_join, keys='epic_number', join_type='left')
     
     save_output(k2_table, '../data/k2_{c}_{d}arcsec'.format(d=dist, c=cat))    
+    save_plot_data(k2_table, '../data/plot_k2_{c}_{d}arcsec'.format(d=dist, c=cat))    
     
     
     # confirmed planets:
@@ -299,6 +318,7 @@ if __name__ == "__main__":
     confirmed_table = join(confirmed_nasa_table_with_kepid, lc_table, keys='kepid', 
                             join_type='left') # add Gaia results
     save_output(confirmed_table, '../data/confirmed_{c}_{d}arcsec'.format(d=dist, c=cat))
+    
     
     if make_plots:  # plots 
         print('making confirmed planets plots...')
