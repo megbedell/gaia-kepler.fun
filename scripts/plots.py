@@ -33,8 +33,8 @@ def skyview_cmd(subsample, out_file, data_type='kepler'):
                         window:mousemove!")
 
     if data_type=='kepler':
-        scale = alt.Scale(domain=['none', 'cand'],
-                      range=['#4a69bd', '#e55039'])
+        scale = alt.Scale(domain=['none', 'cand', 'conf'],
+                      range=['#4a69bd', '#e55039', '#f6b93b'])
         color = alt.Color('planet?:N', scale=scale)
         xscale = alt.Scale(domain=[270, 310])
         yscale = alt.Scale(domain=[35, 55])
@@ -50,9 +50,9 @@ def skyview_cmd(subsample, out_file, data_type='kepler'):
         return
 
     chart1 = alt.Chart(subsample).mark_point().encode(
-            alt.X('ra', scale=xscale, 
+            alt.X('ra_gaia', scale=xscale, 
                   axis=alt.Axis(title='Gaia RA (deg)')),
-            alt.Y('dec', scale=yscale,
+            alt.Y('dec_gaia', scale=yscale,
                   axis=alt.Axis(title='Gaia Dec (deg)')),
             color=alt.condition(brush, color, 
                                 alt.ColorValue('gray'))
@@ -82,7 +82,7 @@ def skyview_cmd(subsample, out_file, data_type='kepler'):
 if __name__ == "__main__":
     subsample_size = 4999
     
-    kep_data = Table.read('../data/lc_tgas_1arcsec.fits', format='fits')
+    kep_data = Table.read('../data/kepler_tgas_1arcsec.fits', format='fits')
     subsample = prepare_data(kep_data, subsample_size=subsample_size)
     skyview_cmd(subsample, '../kepler_tgas_demo.html', data_type='kepler')
     

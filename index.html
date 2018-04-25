@@ -60,6 +60,9 @@
               <a class="nav-link js-scroll-trigger" href="#k2">K2</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#quickstart">Quickstart</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#info">Acknowledgements</a>
             </li>
           </ul>
@@ -77,7 +80,7 @@
             <hr>
           </div>
           <div class="col-lg-8 mx-auto">
-            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">HECK YEAH</a>
+            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">H*CK YEAH</a>
           </div>
         </div>
       </div>
@@ -88,7 +91,9 @@
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
 			<p class="text-faded mb-4"><b>This website provides</b> cross-matched catalogs of <i>Gaia</i> data for stars observed by <i>Kepler</i>/<i>K2</i>.</p>
-			<p class="text-faded mb-4">The data are provided in binary FITS tables ready to be read by <a href='http://www.astropy.org/'>Astropy</a>.</p>
+			<p class="text-faded mb-4"><h2><strong>12,343</strong></h2> <i>Kepler</i> targets currently have <i>Gaia</i> astrometric solutions.</p>
+			<p class="text-faded mb-4"><h2><strong>29,916</strong></h2> <i>K2</i> targets currently have <i>Gaia</i> astrometric solutions.</p>
+			<p class="text-faded mb-4">Scroll down to download the data as binary FITS tables ready to be read by <a href='http://www.astropy.org/'>Astropy</a>.</p>
 			<p class="text-faded mb-4">Website made by <a href='http://bedell.space'>Megan Bedell</a> (Flatiron Institute).</p>
           </div>
         </div>
@@ -114,10 +119,11 @@
 		</div>
         <div class="col-lg-12 text-center">
 		<p class="mb-4">
-			<b>DOWNLOAD:</b> <a href="data/lc_tgas_1arcsec.fits">FITS</a>
+			<b>DOWNLOAD:</b> <a href="data/kepler_tgas_4arcsec.fits">FITS (4" search radius)</a>, <a href="data/kepler_tgas_1arcsec.fits">FITS (1" search radius)</a>
 		</p>
         </div>
       </div>
+  	</div>
     </section>
 	
     <section id="k2">
@@ -133,11 +139,43 @@
 		</div>
         <div class="col-lg-12 text-center">
 		<p class="mb-4">
-			<b>DOWNLOAD:</b> <a href="data/k2_tgas_1arcsec.fits">FITS</a>
+			<b>DOWNLOAD:</b> <a href="data/k2_tgas_4arcsec.fits">FITS (4" search radius)</a>, <a href="data/k2_tgas_1arcsec.fits">FITS (1" search radius)</a>
 		</p>
         </div>
       </div>
     </section>
+	
+	    <section id="quickstart">
+	      <div class="container">
+	        <div class="row">
+	          <div class="col-lg-8 mx-auto text-center">
+	            <h2 class="section-heading">Quickstart Guide</h2>
+	            <hr class="my-4">
+        <div class="col-lg-12 text-center">
+			<p class="mb-4">
+				First download whichever data set you wish by right-clicking and saving the appropriate FITS file above. Depending on your use case, you may wish to download the query results using a 4 arcsecond search radius around the <i>Kepler</i>/<i>K2</i> coordinates (to ensure that multiple sources falling within the same <i>Kepler</i> pixel are included) or using a 1 arcsecond search radius (to limit matches to the most likely <i>Gaia</i> counterpart to the <i>Kepler</i>/<i>K2</i> catalog source).
+			</p>
+		<p class="mb-4">
+			To load the data quickly in python:<br>
+			<code>
+			from astropy.table import Table<br>
+			data = Table.read('filename.fits', format='fits')
+		</code>
+		</p>
+		<p class="mb-4">
+			From here, you may wish to inspect the header information, including column names and units:<br>
+			<code>
+			print(data.info)
+		</code>
+		</p>
+		<p class="mb-4">
+			You can also export the table in <a href='http://docs.astropy.org/en/stable/api/astropy.table.Table.html#astropy.table.Table.write'>a variety of alternative formats</a> with the <code>data.write()</code> function or convert it to a pandas dataframe as <code>data.to_pandas()</code>.
+		</p>		
+        </div>
+	          </div>
+	        </div>
+	      </div>
+	    </section>
 
     <section id="info">
       <div class="container">
@@ -154,7 +192,7 @@ the institutions participating in the <i>Gaia</i> Multilateral Agreement.</p>
 			<p class="mb-4">Data on this website also come from the <i>Kepler</i> and <i>K2</i> missions, funding for which is provided by the NASA Science Mission directorate. Access to these catalogs was provided by the <a href="https://exoplanetarchive.ipac.caltech.edu">NASA Exoplanet Archive</a>, which is operated by the California Institute of Technology, under contract with the National Aeronautics and Space Administration under the Exoplanet Exploration Program.</p>
 			<p class="mb-4">We use the cross-match service and Vizier catalogue access tool provided by CDS, Strasbourg, France. We also use the <a href="https://doi.org/10.5281/zenodo.44961">astroquery</a> and <a href='https://arxiv.org/abs/1801.02634'>astropy</a> python packages.</p>
 			<p class="mb-4">Interactive plots were made with the <a href="https://altair-viz.github.io/index.html">Altair</a> package.</p>
-            <p class="mb-4">Feel free to use these data as you wish, but please be sure to cite the relevant <i>Gaia</i> and/or <i>Kepler</i> sources in any resulting publications.</p>
+            <p class="mb-4">Feel free to use these data as you wish, but please be sure to cite the relevant <i>Gaia</i> and/or <i>Kepler</i> sources in any resulting publications. If you wish to acknowledge this website, here is a suggested wording: <i>"This work made use of the gaia-kepler.fun crossmatch database created by Megan Bedell."</i></p>
             <p class="mb-4">Questions? Complaints? Compliments? <a href="mailto:megbedell@gmail.com">Email</a> or <a href="https://www.twitter.com/meg_bedell">tweet</a> me!</p>
             <p class="mb-4">Thanks for reading this. <a href="https://openpuppies.com">Here, have a puppy.</a></p>
           </div>

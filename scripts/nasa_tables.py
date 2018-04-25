@@ -1,5 +1,8 @@
 from astropy.utils.data import download_file
 from astropy.io import ascii
+from astropy.table import QTable, Table
+from astropy import units as u
+from units import kepler_unit_map
 
 STELLAR_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
                       'nstedAPI/nph-nstedAPI?table=q1_q17_dr25_stellar')
@@ -48,6 +51,12 @@ def get_table(url=None, cache=True, show_progress=True,
                                    show_progress=show_progress,
                                    timeout=120)
     table = ascii.read(table_path)
+
+    # Assign units to columns where possible
+    for col in table.colnames:
+        if col in kepler_unit_map:
+            if not isinstance(kepler_unit_map[col], u.UnrecognizedUnit): # unit is valid
+                table[col].unit = kepler_unit_map[col]
 
     return table
 
