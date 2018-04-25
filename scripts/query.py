@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from astropy import units as u
 from astropy.io import fits, ascii
 from astroquery.xmatch import XMatch
-from astropy.table import QTable, Table, Column, MaskedColumn, join, unique
+from astropy.table import QTable, Table, Column, MaskedColumn, join, unique, vstack
 import pandas as pd
 from tqdm import tqdm
 import os
@@ -114,7 +114,6 @@ def run_kepler_query(dist, cat, remake_csvs=True, make_plots=True):
        
 def run_k2_query(dist, cat, remake_csvs=True, make_plots=True):    
     # K2 targets:
-    k2_file = 'epic_coords.csv'  
     select = 'epic_number,tm_name,k2_campaign_str,k2_type,ra,dec,k2_lcflag,k2_scflag'
     select += ',k2_teff,k2_tefferr1,k2_tefferr2,k2_logg,k2_loggerr1,k2_loggerr2'
     select += ',k2_metfe,k2_metfeerr1,k2_metfeerr2,k2_rad,k2_raderr1,k2_raderr2'
@@ -123,19 +122,26 @@ def run_k2_query(dist, cat, remake_csvs=True, make_plots=True):
     k2_nasa_table = get_k2targets_table(select=select)
     epic = k2_nasa_table['epic_number']
      
-    if remake_csvs or not os.path.isfile(k2_file): # make the file
-        print('making K2 target file...')
+    k2_files = ['epic_coords0.csv', 'epic_coords1.csv', 'epic_coords2.csv', 'epic_coords3.csv', 
+                'epic_coords4.csv', 'epic_coords5.csv', 'epic_coords6.csv', 'epic_coords7.csv']  
+    if remake_csvs or not os.path.isfile(k2_files[0]): # make the file
+        print('making K2 target files...')
         k2_coords_table = get_k2targets_table(select='epic_number,ra,dec')
         ra, dec = k2_coords_table['ra'], k2_coords_table['dec']
-        f = open(k2_file, 'w')
-        f.write('epic_number, ra_epic, dec_epic\n')
+        fs = [open(f, 'w') for f in k2_files]
+        for f in fs:
+            f.write('epic_number, ra_epic, dec_epic\n')
         for e,(r,d) in tqdm(zip(epic, zip(ra, dec))):
-            f.write('{0}, {1:.8f}, {2:.8f}\n'.format(e, r, d))
-        f.close()
-        print('file made')
+            file_pick = np.random.randint(0,len(k2_files))
+            fs[file_pick].write('{0}, {1:.8f}, {2:.8f}\n'.format(e, r, d))
+        for f in fs:
+            f.close()
+        print('files made')
     
-
-    k2_xmatch_table = xmatch_cds_from_csv(k2_file, ra_name='ra_epic', dec_name='dec_epic', dist=dist, cat=cat)
+    xmatch_tables = []
+    for f in k2_files:
+        xmatch_tables.append(xmatch_cds_from_csv(f, ra_name='ra_epic', dec_name='dec_epic', dist=dist, cat=cat))
+    k2_xmatch_table = vstack(xmatch_tables)
     k2_table = join(k2_xmatch_table, k2_nasa_table, keys='epic_number', table_names=['gaia', 'nasa'], 
                     join_type='left')
     
@@ -195,7 +201,7 @@ if __name__ == "__main__":
     make_plots = True
     
     print("running queries with dist = {0} arcsec".format(dist))
-    #kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
+    kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
     k2_table = run_k2_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
     confirmed_table = get_confirmed(kepler_table, dist, cat, make_plots=make_plots)
     

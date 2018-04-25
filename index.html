@@ -92,7 +92,7 @@
           <div class="col-lg-8 mx-auto text-center">
 			<p class="text-faded mb-4"><b>This website provides</b> cross-matched catalogs of <i>Gaia</i> data for stars observed by <i>Kepler</i>/<i>K2</i>.</p>
 			<p class="text-faded mb-4"><h2><strong>199,150</strong></h2> <i>Kepler</i> targets currently have <i>Gaia</i> astrometric solutions as of DR2.</p>
-			<p class="text-faded mb-4"><h2><strong><i>pending</i></strong></h2> <i>K2</i> targets currently have <i>Gaia</i> astrometric solutions as of DR2.</p>
+			<p class="text-faded mb-4"><h2><strong>311,293</strong></h2> <i>K2</i> targets currently have <i>Gaia</i> astrometric solutions as of DR2.</p>
 			<p class="text-faded mb-4">Scroll down to download the data as binary FITS tables ready to be read by <a href='http://www.astropy.org/'>Astropy</a>.</p>
 			<p class="text-faded mb-4">Website made by <a href='http://bedell.space'>Megan Bedell</a> (Flatiron Institute).</p>
           </div>
@@ -108,7 +108,7 @@
             <hr class="my-4">
 		  <div class="col-lg-12 text-center">
 			  <p class="mb-4">
-				 Here's a color-magnitude diagram for all KIC objects with Gaia G > 18 and parallax > 0.1 milliarcseconds. Fainter stars may have less reliable parallaxes. Stars with candidate planets are blue, stars with confirmed planets are red, and all stars with no known planets are black. 
+				 Here's a color-magnitude diagram for all KIC objects with Gaia G < 18 and parallax > 0.1 milliarcseconds. Fainter stars may have less reliable parallaxes. Stars with candidate planets are blue, stars with confirmed planets are red, and all stars with no known planets are black. 
 			  </p>
 		  <img class="img-fluid" src="img/colormag_kepler.png" alt=""></img>
 	  	  </div>
@@ -144,21 +144,15 @@
           <div class="col-lg-12 text-center">
             <h2 class="section-heading">K2</h2>
             <hr class="my-4">
-
-		<p class="mb-4">
-			Here's a subset of K2 stars observed by Gaia in DR1!
-		</p>
-		<p class="mb-4">
-			Zoom & scroll in the left panel. Hold down shift and draw a rectangle in either panel to select a subset. Shift-drag the rectangle to a new spot or shift-click elsewhere to make it go away.
-		</p>
-        </div>
-		
-		  <div class="embed-responsive embed-responsive-16by9">
-  			<iframe class="embed-responsive-item" src="k2_tgas_demo.html" allowfullscreen></iframe>
-		</div>
+		  <div class="col-lg-12 text-center">
+			  <p class="mb-4">
+				 Here's a color-magnitude diagram for EPIC objects with Gaia G < 18 and parallax > 0.1 milliarcseconds. Fainter stars may have less reliable parallaxes. Stars with candidate planets are blue, stars with confirmed planets are red, and all stars with no known planets are black. 
+			  </p>
+		  <img class="img-fluid" src="img/colormag_k2.png" alt=""></img>
+	  	  </div>
         <div class="col-lg-12 text-center">
 		<p class="mb-4">
-			<b>DOWNLOAD DATA:</b> <i>coming soon!</i> <!--<a href="data/k2_dr2_4arcsec.fits">FITS (4" search radius)</a>, <a href="data/k2_dr2_1arcsec.fits">FITS (1" search radius)</a>-->
+			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/ahrunxv1jxzkolr/k2_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a><!--, <a href="data/k2_dr2_1arcsec.fits">FITS (1" search radius)</a>-->
 		</p>
 		<p class="mb-4">
 			This is a cross-match with the NASA Exoplanet Archive <code>k2targets</code> catalog consisting of stellar targets from the <i>K2</i> EPIC; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_k2_columns.html'>here</a> for detailed descriptions of the data columns.
