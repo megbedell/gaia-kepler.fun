@@ -28,7 +28,12 @@ def xmatch_cds_from_csv(file, ra_name='RA', dec_name='Dec', dist=5, cat='src'):
         gaia_cat = 'vizier:I/337/tgas' # DR1 TGAS
     elif cat=='src':
         gaia_cat = 'vizier:I/337/gaia' # DR1 src
-    table = XMatch.query(cat1=open(file), cat2=gaia_cat, max_distance=dist * u.arcsec, colRA1=ra_name, colDec1=dec_name)
+    elif cat=='dr2':
+        gaia_cat = 'vizier:I/345/gaia2' # DR2
+    print("starting xmatch between {0} and {1} cat".format(file, cat))
+    table = XMatch.query(cat1=open(file), cat2=gaia_cat, max_distance=dist * u.arcsec, 
+                         colRA1=ra_name, colDec1=dec_name)
+    print("xmatch complete")
     # Assign units to columns where possible
     for col in table.colnames:
         if col not in gaia_col_keep and col not in gaia_unit_map: # don't care about this quantity
@@ -36,7 +41,6 @@ def xmatch_cds_from_csv(file, ra_name='RA', dec_name='Dec', dist=5, cat='src'):
         if col in gaia_unit_map:
             if not isinstance(gaia_unit_map[col], u.UnrecognizedUnit): # unit is valid
                 table[col].unit = gaia_unit_map[col]
-    
     return table
     
 def plot_matches(xmatch_table, names_col, all_names, basename, dist, cat):
@@ -181,23 +185,24 @@ def get_confirmed(kepler_table, dist, cat, make_plots=True):
         print("save failed.")
         pdb.set_trace()
     return confirmed_table
+    
 
     
 if __name__ == "__main__":
     dist = 4 # arcsec radius of query
-    cat = 'tgas' # 'src' or 'tgas'
+    cat = 'dr2' # 'src' or 'tgas' or 'dr2'
     remake_csvs = False
     make_plots = True
     
     print("running queries with dist = {0} arcsec".format(dist))
-    kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
+    #kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
     k2_table = run_k2_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
     confirmed_table = get_confirmed(kepler_table, dist, cat, make_plots=make_plots)
     
     dist = 1 # arcsec radius of query
       
     print("running queries with dist = {0} arcsec".format(dist))  
-    kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
+    kepler_table = cut_table(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
     k2_table = run_k2_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
     confirmed_table = get_confirmed(kepler_table, dist, cat, make_plots=make_plots)
     
