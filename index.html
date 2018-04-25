@@ -108,7 +108,7 @@
             <hr class="my-4">
 		  <div class="col-lg-12 text-center">
 			  <p class="mb-4">
-				 Here's a color-magnitude diagram for all KIC objects with Gaia G > 18. Fainter stars may have less reliable parallaxes. Stars with candidate planets are blue, stars with confirmed planets are red, and all stars with no known planets are black. 
+				 Here's a color-magnitude diagram for all KIC objects with Gaia G > 18 and parallax > 0.1 milliarcseconds. Fainter stars may have less reliable parallaxes. Stars with candidate planets are blue, stars with confirmed planets are red, and all stars with no known planets are black. 
 			  </p>
 		  <img class="img-fluid" src="img/colormag_kepler.png" alt=""></img>
 	  	  </div>
@@ -192,7 +192,10 @@
 		</p>
 		<p class="mb-4">
 			You can also export the table in <a href='http://docs.astropy.org/en/stable/api/astropy.table.Table.html#astropy.table.Table.write'>a variety of alternative formats</a> with the <code>data.write()</code> function or convert it to a pandas dataframe as <code>data.to_pandas()</code>.
-		</p>		
+		</p>	
+		<p class="mb-4">
+			You can find a Jupyter notebook that I've been playing with (and using to make some plots on this website) <a href='https://github.com/megbedell/gaia-kepler.fun/blob/master/notebooks/demo.ipynb'>here</a>. This is an open-source project, so please feel free to fork & update on github!
+		</p>	
         </div>
 	          </div>
 	        </div>
