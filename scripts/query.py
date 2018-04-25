@@ -13,7 +13,7 @@ from units import gaia_unit_map
 from plots import skyview_cmd
 import pdb
 
-gaia_col_keep = ['angDist', 'kepid', 'epic_number', 'ra_ep2000', 'dec_ep2000', 'ra', 'dec', 'hip', 
+gaia_col_keep = ['angDist', 'kepid', 'epic_number', 'pl_name', 'ra_ep2000', 'dec_ep2000', 'ra', 'dec', 'hip', 
                 'tycho2_id', 'solution_id', 'source_id', 'ref_epoch', 'ra_error', 'dec_error', 
                 'parallax', 'parallax_error', 'pmra', 'pmra_error', 'pmdec', 'pmdec_error', 
                 'astrometric_excess_noise', 'astrometric_excess_noise_sig', 'astrometric_primary_flag',
@@ -67,7 +67,7 @@ def save_output(table, filename):
     table.write(filename+'.fits', format='fits', overwrite=True)
     #table_header = t.meta
     
-def run_kepler_query(dist, cat, remake_csvs=True, make_plots=True):
+def run_kepler_query(dist, cat, remake_csvs=False, make_plots=True):
     # OG Kepler long-cadence targets:
     lc_file = 'kic_lc_coords.csv'  
     select = 'kepid,tm_designation,ra,dec,kepmag'
@@ -112,7 +112,7 @@ def run_kepler_query(dist, cat, remake_csvs=True, make_plots=True):
         pdb.set_trace()
     return lc_table 
        
-def run_k2_query(dist, cat, remake_csvs=True, make_plots=True):    
+def run_k2_query(dist, cat, remake_csvs=False, make_plots=True):    
     # K2 targets:
     select = 'epic_number,tm_name,k2_campaign_str,k2_type,ra,dec,k2_lcflag,k2_scflag'
     select += ',k2_teff,k2_tefferr1,k2_tefferr2,k2_logg,k2_loggerr1,k2_loggerr2'
@@ -164,25 +164,32 @@ def run_k2_query(dist, cat, remake_csvs=True, make_plots=True):
         pdb.set_trace()
     return k2_table   
     
-def get_confirmed(kepler_table, dist, cat, make_plots=True):    
+def get_confirmed(dist, cat, remake_csvs=False, make_plots=True):    
     # confirmed planets:
     print('assembling confirmed planets table...')
-    select = 'pl_hostname,pl_letter,pl_discmethod,pl_pnum,pl_orbper,pl_orbsmax,pl_orbeccen'
-    select += ',pl_bmassj,pl_radj,pl_dens,pl_eqt,pl_insol'
-    confirmed_nasa_table = get_confirmed_planets_table(select=select)
+    #select = 'pl_hostname,pl_letter,pl_discmethod,pl_pnum,pl_orbper,pl_orbsmax,pl_orbeccen'
+    #select += ',pl_bmassj,pl_radj,pl_dens,pl_eqt,pl_insol'
+    select = None
+    conf_nasa_table = get_confirmed_planets_table(select=select)
+    confirmed_file = 'confirmed_coords.csv'
     
-    full_alias_table = get_alias_table()
-    alias_table = unique(full_alias_table, keys='kepid')
-    star_names = [n.split(" ")[0] for n in alias_table['alt_name']] # HACK - might be losing some?
-    alias_table['pl_hostname'] = star_names
-    alias_table.remove_column('alt_name')
-    confirmed_nasa_table_with_kepid = join(confirmed_nasa_table, alias_table, keys='pl_hostname',
-                                join_type='inner') # add KIC numbers, remove non-Kepler hosts
-    confirmed_table = join(confirmed_nasa_table_with_kepid, kepler_table, keys='kepid', 
-                            join_type='left') # add Gaia results        
+    if remake_csvs or not os.path.isfile(confirmed_file): # make the file
+        print('making confirmed target file...')
+        ra, dec = conf_nasa_table['ra'], conf_nasa_table['dec']
+        f = open(confirmed_file, 'w')
+        f.write('pl_name, ra_nasa, dec_nasa\n')
+        for k,(r,d) in tqdm(zip(conf_nasa_table['pl_name'], zip(ra, dec))):
+            f.write('{0}, {1:.8f}, {2:.8f}\n'.format(k, r, d))
+        f.close()
+        print('file made')
+    
+    conf_xmatch_table = xmatch_cds_from_csv(confirmed_file, ra_name='ra_nasa', dec_name='dec_nasa', dist=dist, cat=cat)
+    confirmed_table = join(conf_xmatch_table, conf_nasa_table, keys='pl_name', table_names=['gaia', 'nasa'], 
+                    join_type='left')
+     
     if make_plots:  # plots 
         print('making confirmed planets plots...')
-        plot_matches(confirmed_table, 'pl_name', confirmed_nasa_table['pl_name'], 
+        plot_matches(confirmed_table, 'pl_name', conf_nasa_table['pl_name'], 
                      'confirmed', dist, cat)
                      
     try:
@@ -200,15 +207,22 @@ if __name__ == "__main__":
     remake_csvs = False
     make_plots = True
     
-    print("running queries with dist = {0} arcsec".format(dist))
-    kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
-    k2_table = run_k2_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
-    confirmed_table = get_confirmed(kepler_table, dist, cat, make_plots=make_plots)
-    
+    if False:
+        print("running queries with dist = {0} arcsec".format(dist))
+        kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
+        k2_table = run_k2_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
+        confirmed_table = get_confirmed(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
+    else:
+        print("loading pre-queried data with dist = {0} arcsec".format(dist))
+        kepler_table = Table.read('../data/kepler_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
+        k2_table = Table.read('../data/k2_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
+        confirmed_table = Table.read('../data/confirmed_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
+            
     dist = 1 # arcsec radius of query
       
-    print("running queries with dist = {0} arcsec".format(dist))  
-    kepler_table = cut_table(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
-    k2_table = run_k2_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
-    confirmed_table = get_confirmed(kepler_table, dist, cat, make_plots=make_plots)
+    if True: 
+        print("running queries with dist = {0} arcsec".format(dist)) 
+        kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
+        k2_table = run_k2_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
+        confirmed_table = get_confirmed(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
     

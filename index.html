@@ -60,6 +60,9 @@
               <a class="nav-link js-scroll-trigger" href="#k2">K2</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#other">+</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#quickstart">Quickstart</a>
             </li>
             <li class="nav-item">
@@ -127,8 +130,8 @@
 				-->
         <div class="col-lg-12 text-center">
 		<p class="mb-4">
-			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/v070hmvhm2ezjax/kepler_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a> 
-			<!--<a href="data/kepler_dr2_1arcsec.fits">FITS (1" search radius)</a>-->
+			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/v070hmvhm2ezjax/kepler_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a>, 
+			<a href="https://www.dropbox.com/s/xo1n12fxzgzybny/kepler_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
 		</p>
 		<p class="mb-4">
 			This is a cross-match with the NASA Exoplanet Archive <code>q1_q17_dr25_stellar</code> catalog consisting of all stellar targets with long-cadence observations from <i>Kepler</i>; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_keplerstellar_columns.html'>here</a> for detailed descriptions of the data columns.
@@ -137,6 +140,7 @@
       </div>
   	</div>
     </section>
+
 	
     <section id="k2">
       <div class="container">
@@ -152,10 +156,32 @@
 	  	  </div>
         <div class="col-lg-12 text-center">
 		<p class="mb-4">
-			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/ahrunxv1jxzkolr/k2_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a><!--, <a href="data/k2_dr2_1arcsec.fits">FITS (1" search radius)</a>-->
+			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/ahrunxv1jxzkolr/k2_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a>, <a href="https://www.dropbox.com/s/pf1bw7xcnk61p73/k2_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
 		</p>
 		<p class="mb-4">
 			This is a cross-match with the NASA Exoplanet Archive <code>k2targets</code> catalog consisting of stellar targets from the <i>K2</i> EPIC; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_k2_columns.html'>here</a> for detailed descriptions of the data columns.
+		</p>
+        </div>
+      </div>
+    </section>
+	
+    <section id="other">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">OTHER</h2>
+            <hr class="my-4">
+		  <div class="col-lg-12 text-center">
+			  <p class="mb-4">
+				 Confirmed exoplanets (as of April 12, 2018, from the NASA Exoplanet Archive):
+			  </p>
+	  	  </div>
+        <div class="col-lg-12 text-center">
+		<p class="mb-4">
+			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/ljrfb3vl31vf7vf/confirmed_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a>, <a href="https://www.dropbox.com/s/sh031hlv6jhykck/confirmed_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
+		</p>
+		<p class="mb-4">
+			This is a cross-match with the NASA Exoplanet Archive <code>exoplanets</code> catalog consisting of stellar targets from the <i>K2</i> EPIC; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_exoplanet_columns.html'>here</a> for detailed descriptions of the data columns. (Note that the <code>pl_name</code> column was constructed during the cross-match and may differ from the "most commonly used" name as supplied by NExSci.)
 		</p>
         </div>
       </div>
@@ -169,7 +195,7 @@
 	            <hr class="my-4">
         <div class="col-lg-12 text-center">
 			<p class="mb-4">
-				First download whichever data set you wish by right-clicking and saving the appropriate FITS file above. Depending on your use case, you may wish to download the query results using a 4 arcsecond search radius around the <i>Kepler</i>/<i>K2</i> coordinates (to ensure that multiple sources falling within the same <i>Kepler</i> pixel are included) or using a 1 arcsecond search radius (to limit matches to the most likely <i>Gaia</i> counterpart to the <i>Kepler</i>/<i>K2</i> catalog source).
+				First download whichever data set you wish by clicking on the appropriate FITS file above and downloading from Dropbox. Depending on your use case, you may wish to download the query results using a 4 arcsecond search radius around the <i>Kepler</i>/<i>K2</i> coordinates (to ensure that multiple sources falling within the same <i>Kepler</i> pixel are included) or using a 1 arcsecond search radius (to limit matches to the most likely <i>Gaia</i> counterpart to the <i>Kepler</i>/<i>K2</i> catalog source).
 			</p>
 		<p class="mb-4">
 			To load the data quickly in python:<br>
