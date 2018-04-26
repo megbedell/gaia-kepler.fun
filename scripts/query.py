@@ -220,9 +220,14 @@ if __name__ == "__main__":
             
     dist = 1 # arcsec radius of query
       
-    if True: 
+    if False: 
         print("running queries with dist = {0} arcsec".format(dist)) 
         kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
         k2_table = run_k2_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
         confirmed_table = get_confirmed(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
-    
+    else:
+        print("loading pre-queried data with dist = {0} arcsec".format(dist))
+        kepler_table = Table.read('../data/kepler_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
+        k2_table = Table.read('../data/k2_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
+        confirmed_table = Table.read('../data/confirmed_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
+       
