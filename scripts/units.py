@@ -95,4 +95,5 @@ gaia_unit_map = {
     'lum_val': u.Lsun,
     'lum_percentile_lower': u.Lsun,
     'lum_percentile_upper': u.Lsun,
+    'angdist': u.arcsec
 }
