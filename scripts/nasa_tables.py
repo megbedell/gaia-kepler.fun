@@ -4,21 +4,21 @@ from astropy.table import QTable, Table
 from astropy import units as u
 from units import kepler_unit_map
 
-STELLAR_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
+STELLAR_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
                       'nstedAPI/nph-nstedAPI?table=q1_q17_dr25_stellar')
-ALIAS_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
+ALIAS_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
                       'nstedAPI/nph-nstedAPI?table=keplernames')
-EXOPLANETS_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
+EXOPLANETS_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
                       'nstedAPI/nph-nstedAPI?table=exoplanets')
-KOIS_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
+KOIS_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
                       'nstedAPI/nph-nstedAPI?table=q1_q17_dr25_koi')
-K2TARGETS_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
+K2TARGETS_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
                       'nstedAPI/nph-nstedAPI?table=k2targets')
-K2CAND_CSV_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
+K2CAND_URL = ('http://exoplanetarchive.ipac.caltech.edu/cgi-bin/'
                       'nstedAPI/nph-nstedAPI?table=k2candidates')
                       
 def get_table(url=None, cache=True, show_progress=True,
-                    table_path=None, select=None):
+                    table_path=None, select=None, format='csv'):
     """
     Download (and optionally cache) a table from the `NExScI Exoplanet Archive 
                                 <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -45,6 +45,7 @@ def get_table(url=None, cache=True, show_progress=True,
         Astropy table of requested data.
     """
     if table_path is None:
+        url += '&format='+format
         if not select is None:
             url += '&select='+select
         table_path = download_file(url, cache=cache,
@@ -62,7 +63,7 @@ def get_table(url=None, cache=True, show_progress=True,
 
     
 def get_confirmed_planets_table(cache=True, show_progress=True,
-                                table_path=None, select=None):
+                                table_path=None, select=None, format='csv'):
     """
     Download (and optionally cache) the `NExScI Exoplanet Archive Confirmed
     Planets table <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -71,9 +72,9 @@ def get_confirmed_planets_table(cache=True, show_progress=True,
     description of the columns can be found `here
     <https://exoplanetarchive.ipac.caltech.edu/docs/API_exoplanet_columns.html>`_
     """
-    exoplanet_table = get_table(url=EXOPLANETS_CSV_URL, cache=cache, 
+    exoplanet_table = get_table(url=EXOPLANETS_URL, cache=cache, 
                                     show_progress=show_progress, 
-                                    table_path=table_path, select=select)
+                                    table_path=table_path, select=select, format=format)
 
     
     # Store column of lowercase names for indexing:
@@ -88,7 +89,7 @@ def get_confirmed_planets_table(cache=True, show_progress=True,
     return exoplanet_table
     
 def get_kois_table(cache=True, show_progress=True,
-                            table_path=None, select=None):
+                            table_path=None, select=None, format='csv'):
     """
     Download (and optionally cache) the `NExScI Exoplanet Archive Kepler
     Objects of Interest table <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -97,14 +98,14 @@ def get_kois_table(cache=True, show_progress=True,
     description of the columns can be found `here
     <https://exoplanetarchive.ipac.caltech.edu/docs/API_kepcandidate_columns.html>`_
     """
-    koi_table = get_table(url=KOIS_CSV_URL, cache=cache, 
+    koi_table = get_table(url=KOIS_URL, cache=cache, 
                                         show_progress=show_progress, 
-                                        table_path=table_path, select=select)
+                                        table_path=table_path, select=select, format=format)
     
     return koi_table
     
 def get_keplerstellar_table(cache=True, show_progress=True,
-                                table_path=None, select=None):
+                                table_path=None, select=None, format='csv'):
     """
     Download (and optionally cache) the `NExScI Exoplanet Archive Kepler
     Stellar table <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -113,14 +114,14 @@ def get_keplerstellar_table(cache=True, show_progress=True,
     description of the columns can be found `here
     <https://exoplanetarchive.ipac.caltech.edu/docs/API_keplerstellar_columns.html>`_
     """
-    keplerstellar_table = get_table(url=STELLAR_CSV_URL, cache=cache, 
+    keplerstellar_table = get_table(url=STELLAR_URL, cache=cache, 
                                         show_progress=show_progress, 
-                                        table_path=table_path, select=select)
+                                        table_path=table_path, select=select, format=format)
     
     return keplerstellar_table
     
 def get_k2targets_table(cache=True, show_progress=True,
-                                table_path=None, select=None):
+                                table_path=None, select=None, format='csv'):
     """
     Download (and optionally cache) the `NExScI Exoplanet Archive K2
     Targets table <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -129,14 +130,14 @@ def get_k2targets_table(cache=True, show_progress=True,
     description of the columns can be found `here
     <https://exoplanetarchive.ipac.caltech.edu/docs/API_k2_columns.html>`_
     """
-    k2targets_table = get_table(url=K2TARGETS_CSV_URL, cache=cache, 
+    k2targets_table = get_table(url=K2TARGETS_URL, cache=cache, 
                                         show_progress=show_progress, 
-                                        table_path=table_path, select=select)
+                                        table_path=table_path, select=select, format=format)
     
     return k2targets_table
     
 def get_k2candidates_table(cache=True, show_progress=True,
-                                table_path=None, select=None):
+                                table_path=None, select=None, format='csv'):
     """
     Download (and optionally cache) the `NExScI Exoplanet Archive K2
     Candidates table <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -145,14 +146,14 @@ def get_k2candidates_table(cache=True, show_progress=True,
     description of the columns can be found `here
     <https://exoplanetarchive.ipac.caltech.edu/docs/API_k2candidates_columns.html>`_
     """
-    k2candidates_table = get_table(url=K2CAND_CSV_URL, cache=cache, 
+    k2candidates_table = get_table(url=K2CAND_URL, cache=cache, 
                                         show_progress=show_progress, 
-                                        table_path=table_path, select=select)
+                                        table_path=table_path, select=select, format=format)
     
     return k2candidates_table
     
 def get_alias_table(cache=True, show_progress=True,
-                                table_path=None, select=None):
+                                table_path=None, select=None, format='csv'):
     """
     Download (and optionally cache) the `NExScI Exoplanet Archive Kepler
     Names table <http://exoplanetarchive.ipac.caltech.edu/index.html>`_.
@@ -160,8 +161,8 @@ def get_alias_table(cache=True, show_progress=True,
     A full description of the columns can be found `here
     <https://exoplanetarchive.ipac.caltech.edu/docs/API_keplernames_columns.html>`_
     """
-    alias_table = get_table(url=ALIAS_CSV_URL, cache=cache, 
+    alias_table = get_table(url=ALIAS_URL, cache=cache, 
                                         show_progress=show_progress, 
-                                        table_path=table_path, select=select)
+                                        table_path=table_path, select=select, format=format)
     
     return alias_table

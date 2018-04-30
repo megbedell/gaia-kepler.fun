@@ -18,7 +18,11 @@ gaia_col_keep = ['angDist', 'kepid', 'epic_number', 'pl_name', 'ra_ep2000', 'dec
                 'parallax', 'parallax_error', 'pmra', 'pmra_error', 'pmdec', 'pmdec_error', 
                 'astrometric_excess_noise', 'astrometric_excess_noise_sig', 'astrometric_primary_flag',
                 'phot_g_n_obs', 'phot_g_mean_flux', 'phot_g_mean_flux_error', 'phot_g_mean_mag', 
-                'phot_variable_flag']
+                'phot_variable_flag', 'parallax_pmra_corr', 'parallax_pmdec_corr', 'pmra_pmdec_corr',
+                'ra_dec_corr', 'ra_parallax_corr', 'ra_pmra_corr', 'ra_pmdec_corr', 'dec_parallax_corr',
+                'dec_pmra_corr', 'dec_pmdec_corr', 'phot_bp_mean_mag', 'phot_rp_mean_mag', 'bp_rp', 'bp_g',
+                'g_rp', 'radial_velocity', 'radial_velocity_error', 'teff_val', 'a_g_val', 'e_bp_min_rp_val',
+                'radius_val', 'lum_val']
 
 def xmatch_cds_from_csv(file, ra_name='RA', dec_name='Dec', dist=5, cat='src'):
     """
@@ -36,11 +40,12 @@ def xmatch_cds_from_csv(file, ra_name='RA', dec_name='Dec', dist=5, cat='src'):
     print("xmatch complete")
     # Assign units to columns where possible
     for col in table.colnames:
-        if col not in gaia_col_keep and col not in gaia_unit_map: # don't care about this quantity
-            table.remove_column(col)
+        #if col not in gaia_col_keep and col not in gaia_unit_map: # don't care about this quantity
+        #    table.remove_column(col)
         if col in gaia_unit_map:
             if not isinstance(gaia_unit_map[col], u.UnrecognizedUnit): # unit is valid
                 table[col].unit = gaia_unit_map[col]
+    table.remove_columns([ra_name, dec_name]) # avoid later conflicts
     return table
     
 def plot_matches(xmatch_table, names_col, all_names, basename, dist, cat):
@@ -202,12 +207,12 @@ def get_confirmed(dist, cat, remake_csvs=False, make_plots=True):
 
     
 if __name__ == "__main__":
-    dist = 4 # arcsec radius of query
+    dist = 16 # arcsec radius of query
     cat = 'dr2' # 'src' or 'tgas' or 'dr2'
     remake_csvs = False
-    make_plots = True
+    make_plots = False
     
-    if False:
+    if True:
         print("running queries with dist = {0} arcsec".format(dist))
         kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
         k2_table = run_k2_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
@@ -217,17 +222,4 @@ if __name__ == "__main__":
         kepler_table = Table.read('../data/kepler_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
         k2_table = Table.read('../data/k2_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
         confirmed_table = Table.read('../data/confirmed_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
-            
-    dist = 1 # arcsec radius of query
       
-    if False: 
-        print("running queries with dist = {0} arcsec".format(dist)) 
-        kepler_table = run_kepler_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
-        k2_table = run_k2_query(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
-        confirmed_table = get_confirmed(dist, cat, remake_csvs=remake_csvs, make_plots=make_plots)
-    else:
-        print("loading pre-queried data with dist = {0} arcsec".format(dist))
-        kepler_table = Table.read('../data/kepler_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
-        k2_table = Table.read('../data/k2_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
-        confirmed_table = Table.read('../data/confirmed_{c}_{d}arcsec.fits'.format(d=dist, c=cat), format='fits')
-       

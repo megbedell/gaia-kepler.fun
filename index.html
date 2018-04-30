@@ -94,10 +94,12 @@
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
 			<p class="text-faded mb-4"><b>This website provides</b> cross-matched catalogs of <i>Gaia</i> data for stars observed by <i>Kepler</i>/<i>K2</i>.</p>
-			<p class="text-faded mb-4"><h2><strong>199,150</strong></h2> <i>Kepler</i> targets currently have <i>Gaia</i> astrometric solutions as of DR2.</p>
-			<p class="text-faded mb-4"><h2><strong>311,293</strong></h2> <i>K2</i> targets currently have <i>Gaia</i> astrometric solutions as of DR2.</p>
+			<p class="text-faded mb-4"><h2><strong>193,244</strong></h2> <i>Kepler</i> targets currently have <i>Gaia</i> astrometric solutions as of DR2.</p>
+			<p class="text-faded mb-4"><h2><strong>246,017</strong></h2> <i>K2</i> targets currently have <i>Gaia</i> astrometric solutions as of DR2.</p>
 			<p class="text-faded mb-4">Scroll down to download the data as binary FITS tables ready to be read by <a href='http://www.astropy.org/'>Astropy</a>.</p>
 			<p class="text-faded mb-4">Website made by <a href='http://bedell.space'>Megan Bedell</a> (Flatiron Institute).</p>
+			<p class="text-faded mb-4"><i><b>UPDATE 29-04-18:</b> Kepler and K2 solutions now include distance estimates from <a href="https://arxiv.org/abs/1804.10121">Bailer-Jones et al.</a>; also, the calculated angular distance between Kepler and Gaia source locations takes into account the different reference epochs.</i></p>
+			
           </div>
         </div>
       </div>
@@ -134,7 +136,7 @@
 			<a href="https://www.dropbox.com/s/xo1n12fxzgzybny/kepler_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
 		</p>
 		<p class="mb-4">
-			This is a cross-match with the NASA Exoplanet Archive <code>q1_q17_dr25_stellar</code> catalog consisting of all stellar targets with long-cadence observations from <i>Kepler</i>; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_keplerstellar_columns.html'>here</a> for detailed descriptions of the data columns.
+			This is a cross-match with the NASA Exoplanet Archive <code>q1_q17_dr25_stellar</code> catalog consisting of all stellar targets with long-cadence observations from <i>Kepler</i>; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_keplerstellar_columns.html'>here</a> for detailed descriptions of the KIC data columns. For descriptions of the <i>Gaia</i> columns see <a href="https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_gaia_source.html">here</a>, and for details about the distance columns (which begin with "<code>r_</code>") see <a href="https://arxiv.org/abs/1804.10121">this preprint</a>.
 		</p>
         </div>
       </div>
@@ -159,7 +161,7 @@
 			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/ahrunxv1jxzkolr/k2_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a>, <a href="https://www.dropbox.com/s/pf1bw7xcnk61p73/k2_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
 		</p>
 		<p class="mb-4">
-			This is a cross-match with the NASA Exoplanet Archive <code>k2targets</code> catalog consisting of stellar targets from the <i>K2</i> EPIC; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_k2_columns.html'>here</a> for detailed descriptions of the data columns.
+			This is a cross-match with the NASA Exoplanet Archive <code>k2targets</code> catalog consisting of stellar targets from the <i>K2</i> EPIC; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_k2_columns.html'>here</a> for detailed descriptions of the EPIC data columns. For descriptions of the <i>Gaia</i> columns see <a href="https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_gaia_source.html">here</a>, and for details about the distance columns (which begin with "<code>r_</code>") see <a href="https://arxiv.org/abs/1804.10121">this preprint</a>.
 		</p>
         </div>
       </div>
@@ -181,7 +183,7 @@
 			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/ljrfb3vl31vf7vf/confirmed_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a>, <a href="https://www.dropbox.com/s/sh031hlv6jhykck/confirmed_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
 		</p>
 		<p class="mb-4">
-			This is a cross-match with the NASA Exoplanet Archive <code>exoplanets</code> catalog consisting of stellar targets from the <i>K2</i> EPIC; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_exoplanet_columns.html'>here</a> for detailed descriptions of the data columns. (Note that the <code>pl_name</code> column was constructed during the cross-match and may differ from the "most commonly used" name as supplied by NExSci.)
+			This is a cross-match with the NASA Exoplanet Archive <code>exoplanets</code> catalog consisting of confirmed planet hosts; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_exoplanet_columns.html'>here</a> for detailed descriptions of the data columns. (Note that the <code>pl_name</code> column was constructed during the cross-match and may differ from the "most commonly used" name as supplied by NExSci.)
 		</p>
         </div>
       </div>
@@ -236,8 +238,7 @@ for the DPAC has been provided by national institutions, in particular
 the institutions participating in the <i>Gaia</i> Multilateral Agreement.</p>
 			<p class="mb-4">Data on this website also come from the <i>Kepler</i> and <i>K2</i> missions, funding for which is provided by the NASA Science Mission directorate. Access to these catalogs was provided by the <a href="https://exoplanetarchive.ipac.caltech.edu">NASA Exoplanet Archive</a>, which is operated by the California Institute of Technology, under contract with the National Aeronautics and Space Administration under the Exoplanet Exploration Program.</p>
 			<p class="mb-4">We use the cross-match service and Vizier catalogue access tool provided by CDS, Strasbourg, France. We also use the <a href="https://doi.org/10.5281/zenodo.44961">astroquery</a> and <a href='https://arxiv.org/abs/1801.02634'>astropy</a> python packages.</p>
-			<p class="mb-4">Interactive plots were made with the <a href="https://altair-viz.github.io/index.html">Altair</a> package.</p>
-            <p class="mb-4">Feel free to use these data as you wish, but please be sure to cite the relevant <i>Gaia</i> and/or <i>Kepler</i> sources in any resulting publications. If you wish to acknowledge this website, here is a suggested wording: <i>"This work made use of the gaia-kepler.fun crossmatch database created by Megan Bedell."</i></p>
+            <p class="mb-4">Feel free to use these data as you wish, but please be sure to cite the relevant <i>Gaia</i> and/or <i>Kepler</i> sources in any resulting publications, as well as <a href="https://arxiv.org/abs/1804.10121">Bailer-Jones et al.</a> (if you use the distances). Should you wish to acknowledge this website, here is a suggested wording: <i>"This work made use of the gaia-kepler.fun crossmatch database created by Megan Bedell."</i></p>
             <p class="mb-4">Questions? Complaints? Compliments? <a href="mailto:megbedell@gmail.com">Email</a> or <a href="https://www.twitter.com/meg_bedell">tweet</a> me!</p>
             <p class="mb-4">Thanks for reading this. <a href="https://openpuppies.com">Here, have a puppy.</a></p>
           </div>
