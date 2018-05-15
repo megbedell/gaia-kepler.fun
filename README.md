@@ -1,37 +1,8 @@
-## Welcome to GitHub Pages
+### gaia-kepler.fun
 
-You can use the [editor on GitHub](https://github.com/megbedell/gaia-kepler.fun/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This repo contains source code and demos for the Gaia-Kepler crossmatches at (gaia-kepler.fun)[http://gaia-kepler.fun].
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Various utility functions for cross-matching and data munging written in python are located under `scripts`. 
+A demo Jupyter notebook which reads in the cross-match and makes cool plots (including color-magnitude diagrams displayed on the website, interactive bokeh versions, and a fun animation) can be found at `notebooks/demo.ipynb`.
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/megbedell/gaia-kepler.fun/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+The website is built on (Bootstrap)[https://getbootstrap.com/] using a slightly modified version of the theme (Creative)[https://github.com/BlackrockDigital/startbootstrap-creative].
