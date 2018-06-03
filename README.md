@@ -6,6 +6,6 @@ The website is built on [Bootstrap](https://getbootstrap.com/) using a slightly 
 
 #### contents
 
-Various utility functions for cross-matching and data munging written in python are located under `scripts`. 
+Various utility functions for cross-matching and data munging written in python are located under `scripts`. A full explanation of how the cross-matches were done is in `scripts/HOWTO.md`. 
 
 A demo Jupyter notebook which reads in the cross-match and makes cool plots (including color-magnitude diagrams displayed on the website, interactive bokeh versions, and a fun animation) can be found at `notebooks/demo.ipynb`.

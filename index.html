@@ -99,6 +99,7 @@
 			<p class="text-faded mb-4">Scroll down to download the data as binary FITS tables ready to be read by <a href='http://www.astropy.org/'>Astropy</a>.</p>
 			<p class="text-faded mb-4">Website made by <a href='http://bedell.space'>Megan Bedell</a> (Flatiron Institute).</p>
 			<p class="text-faded mb-4"><i><b>UPDATE 29-04-18:</b> Kepler and K2 solutions now include distance estimates from <a href="https://arxiv.org/abs/1804.10121">Bailer-Jones et al.</a>; also, the calculated angular distance between Kepler and Gaia source locations takes into account the different reference epochs.</i></p>
+			<p class="text-faded mb-4"><i><b>UPDATE 03-06-18:</b> Some small bugs causing duplication of rows are fixed, and <a href='https://github.com/megbedell/gaia-kepler.fun/blob/master/scripts/HOWTO.md'>a full explanation of how these cross-matches were done</a> has been added to the github repo.</i></p>
 			
           </div>
         </div>
@@ -175,12 +176,12 @@
             <hr class="my-4">
 		  <div class="col-lg-12 text-center">
 			  <p class="mb-4">
-				 Confirmed exoplanets (as of April 12, 2018, from the NASA Exoplanet Archive):
+				 Confirmed exoplanets (as of June 3, 2018, from the NASA Exoplanet Archive):
 			  </p>
 	  	  </div>
         <div class="col-lg-12 text-center">
 		<p class="mb-4">
-			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/ljrfb3vl31vf7vf/confirmed_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a>, <a href="https://www.dropbox.com/s/sh031hlv6jhykck/confirmed_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
+			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/idu1cyg2y9zfysj/exoplanets_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
 		</p>
 		<p class="mb-4">
 			This is a cross-match with the NASA Exoplanet Archive <code>exoplanets</code> catalog consisting of confirmed planet hosts; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_exoplanet_columns.html'>here</a> for detailed descriptions of the data columns. (Note that the <code>pl_name</code> column was constructed during the cross-match and may differ from the "most commonly used" name as supplied by NExSci.)
@@ -216,7 +217,7 @@
 			You can also export the table in <a href='http://docs.astropy.org/en/stable/api/astropy.table.Table.html#astropy.table.Table.write'>a variety of alternative formats</a> with the <code>data.write()</code> function or convert it to a pandas dataframe as <code>data.to_pandas()</code>.
 		</p>	
 		<p class="mb-4">
-			You can find a Jupyter notebook that I've been playing with (and using to make some plots on this website) <a href='https://github.com/megbedell/gaia-kepler.fun/blob/master/notebooks/demo.ipynb'>here</a>. This is an open-source project, so please feel free to fork & update on github!
+			You can find a Jupyter notebook that I've been playing with (and using to make some plots on this website) <a href='https://github.com/megbedell/gaia-kepler.fun/blob/master/notebooks/demo.ipynb'>here</a>. If you want more information about how I made these tables, you can get the full cross-match instructions <a href='https://github.com/megbedell/gaia-kepler.fun/blob/master/scripts/HOWTO.md'>here</a>. This is an open-source project, so please feel free to fork & update on github!
 		</p>	
         </div>
 	          </div>
