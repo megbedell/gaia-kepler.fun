@@ -1,3 +1,4 @@
+import numpy as np
 from astropy.utils.data import download_file
 from astropy.io import ascii
 from astropy.table import QTable, Table
@@ -166,3 +167,18 @@ def get_alias_table(cache=True, show_progress=True,
                                         table_path=table_path, select=select, format=format)
     
     return alias_table
+    
+def get_kic_table(piece=0):
+    """
+    Read in full 13 million object KIC from MAST
+    """
+    kic_file_path = '../data/kic{0}.txt'.format(piece)
+    try:
+        return ascii.read(kic_file_path, delimiter='|')
+    except:        
+        with open(kic_file_path, 'r') as f:
+            header = f.readline()
+            colnames = header.split('|')
+            print(colnames)
+    
+        #kic = np.genfromtxt(kic_file_path, delimiter='|', names=True, dtype=None, encoding=None)
