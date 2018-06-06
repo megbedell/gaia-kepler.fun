@@ -145,9 +145,10 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
     table = join(gaia_w_dist_tbl, nasa_table, keys=nasa_table_key)
         
     # calculate angular distances, propagating PM between epochs
-    refCoord = coord.SkyCoord(ra=table[ra_key], dec=table[dec_key])        
+    refCoord = coord.SkyCoord(ra=table[ra_key], dec=table[dec_key], obstime='J2000') # this is a guess!        
     table['radial_velocity'][np.isnan(table['radial_velocity'])] = 0.
     gaia_time = Time(table['gaia_ref_epoch'], format='jyear')
+    ref_time = refCoord.obstime
     gaiaCoord = coord.SkyCoord(ra=table['ra'], 
                             dec=table['dec'], 
                             distance=(table['parallax']).to(u.pc, u.parallax()),
@@ -156,7 +157,8 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
                             pm_dec=table['pmdec'], 
                             obstime=gaia_time
                             )
-    sep = refCoord.separation(gaiaCoord)
+    gaiaCoord_shifted = gaiaCoord.apply_space_motion(new_obstime=ref_time)
+    sep = refCoord.separation(gaiaCoord_shifted)
     ind = np.where(sep > 10. * u.deg)[0]
     for i in ind:
         sep[i] = 180.*u.deg - sep[i] # HACK
