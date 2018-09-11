@@ -79,7 +79,7 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
         select += ',teff,teff_err1,teff_err2,teff_prov,logg,logg_err1,logg_err2,logg_prov'
         select += ',feh,feh_err1,feh_err2,feh_prov,radius,radius_err1,radius_err2'
         select += ',mass,mass_err1,mass_err2,prov_sec,nconfp,nkoi,ntce,jmag,hmag,kmag'
-        nasa_table = get_keplerstellar_table(select=select)
+        nasa_table = get_keplerstellar_table(select=select, cache=False)
         nasa_table = clean_kepler_table(nasa_table)
         
         # make custom planet host status column
@@ -101,7 +101,7 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
         select += ',k2_teff,k2_tefferr1,k2_tefferr2,k2_logg,k2_loggerr1,k2_loggerr2'
         select += ',k2_metfe,k2_metfeerr1,k2_metfeerr2,k2_rad,k2_raderr1,k2_raderr2'
         select += ',k2_mass,k2_masserr1,k2_masserr2,k2_kepmag,k2_kepmagerr,k2_kepmagflag'
-        nasa_table = get_k2targets_table(select=select)
+        nasa_table = get_k2targets_table(select=select, cache=False)
         nasa_table = clean_kepler_table(nasa_table)
         
         # join info about planet host status: 
@@ -122,7 +122,7 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
         outfile_1arcsec = 'exoplanets_dr2_1arcsec.fits'
         
         select = None
-        nasa_table = get_confirmed_planets_table(select=select)
+        nasa_table = get_confirmed_planets_table(select=select, cache=False)
         nasa_table = clean_kepler_table(nasa_table)
         nasa_table.remove_columns(['ra','dec','ra_str','dec_str'])
         
@@ -182,7 +182,7 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
 if __name__ == "__main__":
 
     # Kepler:
-    if True:
+    if False:
         make_full_tables(kepler=True)
         print('Kepler finished')
         
