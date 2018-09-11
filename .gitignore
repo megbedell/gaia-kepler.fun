@@ -1,0 +1,6 @@
+*.csv
+*.fits
+*.txt
+.DS_Store
+*/.DS_Store
+notebooks/.ipynb_checkpoints
