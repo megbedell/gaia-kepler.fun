@@ -92,8 +92,9 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
         ang_dist_key = 'kepler_gaia_ang_dist' # name for gaia - nasa angular distance
               
     elif k2:
-        gaia_matches_file = data_dir+'k2_5arcsec_gaia.fits'
-        dist_table_file = data_dir+'k2_5arcsec_dist.fits'
+        gaia_matches_file = data_dir+'k2_20arcsec_gaia.fits'
+        dist_table_file = data_dir+'k2_20arcsec_dist.fits'
+        outfile_20arcsec = 'k2_dr2_20arcsec.fits'
         outfile_4arcsec = 'k2_dr2_4arcsec.fits'
         outfile_1arcsec = 'k2_dr2_1arcsec.fits'
         
@@ -165,6 +166,12 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
     table[ang_dist_key] = sep.arcsec
     table[ang_dist_key].unit = u.arcsec  
     
+    if k2:
+        # save 20 arcsec radius:
+        table = table[table[ang_dist_key] <= 20.]
+        table.write(outfile_20arcsec, format='fits', overwrite=True)
+        print('{0} stars with matches within 4 arcsec'.format(len(np.unique(table[nasa_table_key]))))        
+    
     if not exoplanets:
         # cut down to 4 arcsec and save:
         table = table[table[ang_dist_key] <= 4.]
@@ -194,7 +201,7 @@ if __name__ == "__main__":
         
     
     # confirmed planets:
-    if True:
+    if False:
         make_full_tables(exoplanets=True)
         print('exoplanets finished')    
     
