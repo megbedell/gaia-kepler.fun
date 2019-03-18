@@ -170,7 +170,7 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
         # save 20 arcsec radius:
         table = table[table[ang_dist_key] <= 20.]
         table.write(outfile_20arcsec, format='fits', overwrite=True)
-        print('{0} stars with matches within 4 arcsec'.format(len(np.unique(table[nasa_table_key]))))        
+        print('{0} stars with matches within 20 arcsec'.format(len(np.unique(table[nasa_table_key]))))        
     
     if not exoplanets:
         # cut down to 4 arcsec and save:
