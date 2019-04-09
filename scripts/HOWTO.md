@@ -74,4 +74,4 @@ JOIN gaiadr2_complements.geometric_distance USING (source_id)
 
 #### 4. combining tables into final data products
 
-I then run the `build_tables_w_dist.py` script to trim unnecessary data columns, combine the three data sources (Gaia, Bailer-Jones, and NASA Exoplanet Archive), and save the appropriate match subsets.
+I then run the `build_tables_w_dist.py` script to trim unnecessary data columns, combine the three data sources (Gaia, Bailer-Jones, and NASA Exoplanet Archive), calculate angular separations between Gaia and NASA sources including propagation of proper motions between reference epochs, and save the appropriate match subsets.

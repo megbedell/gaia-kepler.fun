@@ -146,16 +146,26 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
     table = join(gaia_w_dist_tbl, nasa_table, keys=nasa_table_key)
         
     # calculate angular distances, propagating PM between epochs
-    refCoord = coord.SkyCoord(ra=table[ra_key], dec=table[dec_key], obstime='J2000') # this is a guess!        
-    table['radial_velocity'][np.isnan(table['radial_velocity'])] = 0.
+    coordtable = Table(table, copy=True) # copy where we can overwrite problematic values   
+    # zero out NaNs where 6- or 5-parameter solutions aren't available from Gaia DR2
+    # this will avoid NaNs being propagated by astropy SkyCoords operations
+    noplx = (np.isnan(table['parallax'])) | (np.isnan(table['pmra'])) | (np.isnan(table['pmdec']))
+    coordtable['parallax'][noplx] = 0.01
+    coordtable['pmra'][noplx] = 0.
+    coordtable['pmdec'][noplx] = 0. 
+    coordtable['radial_velocity'][np.isnan(table['radial_velocity'])] = 0.
+    coordtable['parallax'][(table['parallax'] <= 0.)] = 0.01 # overwrite negative parallaxes
+       
     gaia_time = Time(table['gaia_ref_epoch'], format='jyear')
+    refCoord = coord.SkyCoord(ra=coordtable[ra_key], dec=coordtable[dec_key], 
+                            obstime='J2000') # KIC/EPIC/NExScI coord epoch
     ref_time = refCoord.obstime
-    gaiaCoord = coord.SkyCoord(ra=table['ra'], 
-                            dec=table['dec'], 
-                            distance=(table['parallax']).to(u.pc, u.parallax()),
-                            radial_velocity=table['radial_velocity'],
-                            pm_ra_cosdec=table['pmra'], 
-                            pm_dec=table['pmdec'], 
+    gaiaCoord = coord.SkyCoord(ra=coordtable['ra'], 
+                            dec=coordtable['dec'], 
+                            distance=(coordtable['parallax']).to(u.pc, u.parallax()),
+                            radial_velocity=coordtable['radial_velocity'],
+                            pm_ra_cosdec=coordtable['pmra'], 
+                            pm_dec=coordtable['pmdec'], 
                             obstime=gaia_time
                             )
     gaiaCoord_shifted = gaiaCoord.apply_space_motion(new_obstime=ref_time)
@@ -164,7 +174,7 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
     for i in ind:
         sep[i] = 180.*u.deg - sep[i] # HACK
     table[ang_dist_key] = sep.arcsec
-    table[ang_dist_key].unit = u.arcsec  
+    table[ang_dist_key].unit = u.arcsec 
     
     if k2:
         # save 20 arcsec radius:
@@ -183,13 +193,10 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
     table.write(outfile_1arcsec, format='fits', overwrite=True)
     print('{0} stars with matches within 1 arcsec'.format(len(np.unique(table[nasa_table_key]))))  
     
-    
-    
-
 if __name__ == "__main__":
 
     # Kepler:
-    if False:
+    if True:
         make_full_tables(kepler=True)
         print('Kepler finished')
         
@@ -201,7 +208,7 @@ if __name__ == "__main__":
         
     
     # confirmed planets:
-    if False:
+    if True:
         make_full_tables(exoplanets=True)
         print('exoplanets finished')    
     
