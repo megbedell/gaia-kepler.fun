@@ -28,10 +28,10 @@ SELECT * , distance(
 FROM gaiadr2.gaia_source AS gaia, user_mbedell.kepler AS kepler
 WHERE 1=CONTAINS(
   POINT('ICRS', kepler.ra_kic, kepler.dec_kic),
-  CIRCLE('ICRS', gaia.ra, gaia.dec, 0.001388889)
+  CIRCLE('ICRS', gaia.ra, gaia.dec, 0.00833333333)
 )
 ```
-(the result of this query is saved as `data/kepler_5arcsec_gaia.fits`)
+(the result of this query is saved as `data/kepler_30arcsec_gaia.fits`)
 
 ```
 SELECT * , distance(
@@ -40,10 +40,10 @@ SELECT * , distance(
 FROM gaiadr2.gaia_source AS gaia, user_mbedell.k2 AS k2
 WHERE 1=CONTAINS(
   POINT('ICRS', k2.ra_epic, k2.dec_epic),
-  CIRCLE('ICRS', gaia.ra, gaia.dec, 0.001388889)
+  CIRCLE('ICRS', gaia.ra, gaia.dec, 0.00833333333)
 )
 ```
-(the result of this query is saved as `data/k2_5arcsec_gaia.fits`)
+(the result of this query is saved as `data/k2_30arcsec_gaia.fits`)
 
 ```
 SELECT * , distance(
@@ -52,10 +52,10 @@ SELECT * , distance(
 FROM gaiadr2.gaia_source AS gaia, user_mbedell.exoplanets AS exo
 WHERE 1=CONTAINS(
   POINT('ICRS', exo.ra_nasa, exo.dec_nasa),
-  CIRCLE('ICRS', gaia.ra, gaia.dec, 0.001388889)
+  CIRCLE('ICRS', gaia.ra, gaia.dec, 0.00277777777)
 )
 ```
-(the result of this query is saved as `data/exoplanets_5arcsec_gaia.fits`)
+(the result of this query is saved as `data/exoplanets_10arcsec_gaia.fits`)
 
 #### 3. cross-matching Gaia sources with Bailer-Jones distances
 
@@ -70,7 +70,7 @@ FROM TAP_UPLOAD.t2
 JOIN gaiadr2_complements.geometric_distance USING (source_id)
 ```
 
-- take the resulting table and save it as (e.g.) `data/kepler_5arcsec_dist.fits`
+- take the resulting table and save it as (e.g.) `data/kepler_20arcsec_dist.fits`
 
 #### 4. combining tables into final data products
 

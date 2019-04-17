@@ -70,8 +70,9 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
     Combine and write out final tables
     """
     if kepler:
-        gaia_matches_file = data_dir+'kepler_5arcsec_gaia.fits'
-        dist_table_file = data_dir+'kepler_5arcsec_dist.fits'
+        gaia_matches_file = data_dir+'kepler_30arcsec_gaia.fits'
+        dist_table_file = data_dir+'kepler_30arcsec_dist.fits'
+        outfile_20arcsec = 'kepler_dr2_20arcsec.fits'
         outfile_4arcsec = 'kepler_dr2_4arcsec.fits'
         outfile_1arcsec = 'kepler_dr2_1arcsec.fits'
         
@@ -92,8 +93,8 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
         ang_dist_key = 'kepler_gaia_ang_dist' # name for gaia - nasa angular distance
               
     elif k2:
-        gaia_matches_file = data_dir+'k2_20arcsec_gaia.fits'
-        dist_table_file = data_dir+'k2_20arcsec_dist.fits'
+        gaia_matches_file = data_dir+'k2_30arcsec_gaia.fits'
+        dist_table_file = data_dir+'k2_30arcsec_dist.fits'
         outfile_20arcsec = 'k2_dr2_20arcsec.fits'
         outfile_4arcsec = 'k2_dr2_4arcsec.fits'
         outfile_1arcsec = 'k2_dr2_1arcsec.fits'
@@ -118,8 +119,8 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
         ang_dist_key = 'k2_gaia_ang_dist' # name for gaia - nasa angular distance        
         
     elif exoplanets:
-        gaia_matches_file = data_dir+'exoplanets_5arcsec_gaia.fits'
-        dist_table_file = data_dir+'exoplanets_5arcsec_dist.fits'
+        gaia_matches_file = data_dir+'exoplanets_10arcsec_gaia.fits'
+        dist_table_file = data_dir+'exoplanets_10arcsec_dist.fits'
         outfile_1arcsec = 'exoplanets_dr2_1arcsec.fits'
         
         select = None
@@ -175,14 +176,13 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
         sep[i] = 180.*u.deg - sep[i] # HACK
     table[ang_dist_key] = sep.arcsec
     table[ang_dist_key].unit = u.arcsec 
+    table.sort([nasa_table_key, ang_dist_key]) # within each KIC/EPIC/host, sort by ang sep
     
-    if k2:
+    if not exoplanets:
         # save 20 arcsec radius:
         table = table[table[ang_dist_key] <= 20.]
         table.write(outfile_20arcsec, format='fits', overwrite=True)
-        print('{0} stars with matches within 20 arcsec'.format(len(np.unique(table[nasa_table_key]))))        
-    
-    if not exoplanets:
+        print('{0} stars with matches within 20 arcsec'.format(len(np.unique(table[nasa_table_key]))))
         # cut down to 4 arcsec and save:
         table = table[table[ang_dist_key] <= 4.]
         table.write(outfile_4arcsec, format='fits', overwrite=True)
