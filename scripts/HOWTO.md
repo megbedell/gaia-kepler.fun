@@ -70,7 +70,7 @@ FROM TAP_UPLOAD.t2
 JOIN gaiadr2_complements.geometric_distance USING (source_id)
 ```
 
-- take the resulting table and save it as (e.g.) `data/kepler_20arcsec_dist.fits`
+- take the resulting table and save it as (e.g.) `data/kepler_30arcsec_dist.fits`
 
 #### 4. combining tables into final data products
 
