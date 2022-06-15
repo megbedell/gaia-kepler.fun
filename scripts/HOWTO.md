@@ -16,48 +16,24 @@ I use a custom code built from `astroquery` to make CSV files of coordinates for
 - K2 targets
 - confirmed planets
 
-A script to get these CSV files is in `make_coord_files.py` with supplementary functions in `nasa_tables.py`.
+A script to get these CSV files is in `make_coord_files.py` with supplementary functions in `nasa_tables.py`, although note that subsequent changes to the NASA Exoplanet Archive interface have made these a little buggy.
 
 #### 2. Gaia cross-matching with the [online archive](http://gea.esac.esa.int/archive/)
 
-I upload the CSV files to the archive, then execute the following Advanced ADQL queries:
+I upload the CSV files to the archive, then execute the following ADQL query:
 ```
 SELECT * , distance(
   POINT('ICRS', kepler.ra_kic, kepler.dec_kic),
   POINT('ICRS', gaia.ra, gaia.dec)) AS angDist
-FROM gaiadr2.gaia_source AS gaia, user_mbedell.kepler AS kepler
-WHERE 1=CONTAINS(
-  POINT('ICRS', kepler.ra_kic, kepler.dec_kic),
-  CIRCLE('ICRS', gaia.ra, gaia.dec, 0.00833333333)
-)
+FROM user_mbedell.kepler AS kepler
+JOIN gaiadr3.gaia_source_lite AS gaia
+  ON 1=CONTAINS(
+    POINT('ICRS', kepler.ra_kic, kepler.dec_kic),
+    CIRCLE('ICRS', gaia.ra, gaia.dec, 30./3600))
 ```
 (the result of this query is saved as `data/kepler_30arcsec_gaia.fits`)
 
-```
-SELECT * , distance(
-  POINT('ICRS', k2.ra_epic, k2.dec_epic),
-  POINT('ICRS', gaia.ra, gaia.dec)) AS angDist
-FROM gaiadr2.gaia_source AS gaia, user_mbedell.k2 AS k2
-WHERE 1=CONTAINS(
-  POINT('ICRS', k2.ra_epic, k2.dec_epic),
-  CIRCLE('ICRS', gaia.ra, gaia.dec, 0.00833333333)
-)
-```
-(the result of this query is saved as `data/k2_30arcsec_gaia.fits`)
-
-```
-SELECT * , distance(
-  POINT('ICRS', exo.ra_nasa, exo.dec_nasa),
-  POINT('ICRS', gaia.ra, gaia.dec)) AS angDist
-FROM gaiadr2.gaia_source AS gaia, user_mbedell.exoplanets AS exo
-WHERE 1=CONTAINS(
-  POINT('ICRS', exo.ra_nasa, exo.dec_nasa),
-  CIRCLE('ICRS', gaia.ra, gaia.dec, 0.00277777777)
-)
-```
-(the result of this query is saved as `data/exoplanets_10arcsec_gaia.fits`)
-
-#### 3. cross-matching Gaia sources with Bailer-Jones distances
+#### 3. cross-matching Gaia sources with Bailer-Jones distances -- NOT YET DONE FOR DR3
 
 With each of the tables generated in the previous step, I open them in TOPCAT and do the following:
 
@@ -74,4 +50,4 @@ JOIN gaiadr2_complements.geometric_distance USING (source_id)
 
 #### 4. combining tables into final data products
 
-I then run the `build_tables_w_dist.py` script to trim unnecessary data columns, combine the three data sources (Gaia, Bailer-Jones, and NASA Exoplanet Archive), calculate angular separations between Gaia and NASA sources including propagation of proper motions between reference epochs, and save the appropriate match subsets.
+I then run the `build_tables_w_dist.py` script to trim unnecessary data columns, combine the three data sources (Gaia, Bailer-Jones, and NASA Exoplanet Archive), calculate angular separations between Gaia and NASA sources including propagation of proper motions between reference epochs (for Gaia sources with net proper motion at or above the level of 50 mas/yr), and save the appropriate match subsets.
