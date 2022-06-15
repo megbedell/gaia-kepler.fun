@@ -57,13 +57,13 @@
               <a class="nav-link js-scroll-trigger" href="#kepler">Kepler</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#k2">K2</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#other">+</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#quickstart">Quickstart</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#faq">FAQ</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#info">Acknowledgements</a>
@@ -94,14 +94,9 @@
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
 			<p class="text-faded mb-4"><b>This website provides</b> cross-matched catalogs of <i>Gaia</i> data for stars observed by <i>Kepler</i>/<i>K2</i>.</p>
-			<p class="text-faded mb-4"><h2><strong>194,909</strong></h2> <i>Kepler</i> targets currently have <i>Gaia</i> astrometric solutions as of DR2.</p>
-			<p class="text-faded mb-4"><h2><strong>294,114</strong></h2> <i>K2</i> targets currently have <i>Gaia</i> astrometric solutions as of DR2.</p>
+			<p class="text-faded mb-4"><h2><strong>194,937</strong></h2> <i>Kepler</i> targets currently have <i>Gaia</i> astrometric solutions as of DR2.</p>
 			<p class="text-faded mb-4">Scroll down to download the data as binary FITS tables ready to be read by <a href='http://www.astropy.org/'>Astropy</a>.</p>
 			<p class="text-faded mb-4">Website made by <a href='http://bedell.space'>Megan Bedell</a> (Flatiron Institute).</p>
-			<p class="text-faded mb-4"><i><b>UPDATE 29-04-18:</b> Kepler and K2 solutions now include distance estimates from <a href="https://arxiv.org/abs/1804.10121">Bailer-Jones et al.</a>; also, the calculated angular distance between Kepler and Gaia source locations takes into account the different reference epochs.</i></p>
-			<p class="text-faded mb-4"><i><b>UPDATE 03-06-18:</b> Some small bugs causing duplication of rows are fixed, and <a href='https://github.com/megbedell/gaia-kepler.fun/blob/master/scripts/HOWTO.md'>a full explanation of how these cross-matches were done</a> has been added to the github repo.</i></p>
-			<p class="text-faded mb-4"><i><b>UPDATE 09-04-19:</b> Fixed bug that caused Gaia sources without measured parallaxes to be dropped and alightly wrongified the calculated angular separations for stars with negative reported parallax.</p>
-			
           </div>
         </div>
       </div>
@@ -117,7 +112,7 @@
 			  <p class="mb-4">
 				 Here's a color-magnitude diagram for all KIC objects with Gaia G < 18 and parallax > 0.1 milliarcseconds. Fainter stars may have less reliable parallaxes. Stars with candidate planets are blue, stars with confirmed planets are red, and all stars with no known planets are black. 
 			  </p>
-		  <img class="img-fluid" src="img/colormag_kepler.png" alt=""></img>
+		  <img class="img-fluid" src="img/colormag_kepler_dr3.png" alt=""></img>
 	  	  </div>
 			<!--
 			<p class="mb-4">
@@ -134,58 +129,37 @@
 				-->
         <div class="col-lg-12 text-center">
 		<p class="mb-4">
-			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/dldnwm6sr5tv586/kepler_dr2_20arcsec.fits?dl=0">FITS (20" search radius)</a>, <a href="https://www.dropbox.com/s/v070hmvhm2ezjax/kepler_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a>, 
-			<a href="https://www.dropbox.com/s/xo1n12fxzgzybny/kepler_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
+			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/g5vxiq51tf5akzv/kepler_dr3_20arcsec.fits?dl=0">FITS (20" search radius)</a>, <a href="https://www.dropbox.com/s/wzpif61yb6mlend/kepler_dr3_4arcsec.fits?dl=0">FITS (4" search radius)</a>, 
+			<a href="https://www.dropbox.com/s/kdbeok7a4forca3/kepler_dr3_1arcsec.fits?dl=0">FITS (1" search radius)</a>, <a href="https://www.dropbox.com/s/pk5cgwjxanczn6b/kepler_dr3_good.fits?dl=0">FITS (one-to-one match)</a>
 		</p>
 		<p class="mb-4">
-			This is a cross-match with the NASA Exoplanet Archive <code>q1_q17_dr25_stellar</code> catalog consisting of all stellar targets with long-cadence observations from <i>Kepler</i>; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_keplerstellar_columns.html'>here</a> for detailed descriptions of the KIC data columns. For descriptions of the <i>Gaia</i> columns see <a href="https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_gaia_source.html">here</a>, and for details about the distance columns (which begin with "<code>r_</code>") see <a href="https://arxiv.org/abs/1804.10121">this preprint</a>.
-		</p>
+			This is a cross-match with the NASA Exoplanet Archive <code>q1_q17_dr25_stellar</code> catalog consisting of all stellar targets with long-cadence observations from <i>Kepler</i>; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_keplerstellar_columns.html'>here</a> for detailed descriptions of the KIC data columns. For descriptions of the <i>Gaia</i> columns see <a href="https://gea.esac.esa.int/archive/documentation/GDR3/Gaia_archive/chap_datamodel/sec_dm_main_source_catalogue/ssec_dm_gaia_source.html">here</a>.		</p>
         </div>
       </div>
   	</div>
-    </section>
-
-	
-    <section id="k2">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <h2 class="section-heading">K2</h2>
-            <hr class="my-4">
-		  <div class="col-lg-12 text-center">
-			  <p class="mb-4">
-				 Here's a color-magnitude diagram for EPIC objects with Gaia G < 18 and parallax > 0.1 milliarcseconds. Fainter stars may have less reliable parallaxes. Stars with candidate planets are blue, stars with confirmed planets are red, and all stars with no known planets are black. 
-			  </p>
-		  <img class="img-fluid" src="img/colormag_k2.png" alt=""></img>
-	  	  </div>
-        <div class="col-lg-12 text-center">
-		<p class="mb-4">
-			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/a92sh46a9we2kzd/k2_dr2_20arcsec.fits?dl=0">FITS (20" search radius)</a>, <a href="https://www.dropbox.com/s/ahrunxv1jxzkolr/k2_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a>, <a href="https://www.dropbox.com/s/pf1bw7xcnk61p73/k2_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
-		</p>
-		<p class="mb-4">
-			This is a cross-match with the NASA Exoplanet Archive <code>k2targets</code> catalog consisting of stellar targets from the <i>K2</i> EPIC; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_k2_columns.html'>here</a> for detailed descriptions of the EPIC data columns. For descriptions of the <i>Gaia</i> columns see <a href="https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_gaia_source.html">here</a>, and for details about the distance columns (which begin with "<code>r_</code>") see <a href="https://arxiv.org/abs/1804.10121">this preprint</a>.
-		</p>
-        </div>
-      </div>
     </section>
 	
     <section id="other">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading">OTHER</h2>
+            <h2 class="section-heading">UPDATE HISTORY</h2>
             <hr class="my-4">
 		  <div class="col-lg-12 text-center">
-			  <p class="mb-4">
-				 Confirmed exoplanets (as of September 6, 2018, from the NASA Exoplanet Archive):
-			  </p>
-	  	  </div>
-        <div class="col-lg-12 text-center">
+        This cross-match was last updated on June 15, 2022 to include Gaia DR3. 
+        At this point, the K2 and "confirmed exoplanets" tables were phased out, since the NASA Exoplanet Archive tables already include a Gaia cross-match.
+
+        You can still download the old DR2 cross-matches (versioned to 09/04/2019) here:
+
+        <p class="mb-4">
+          <b>KEPLER:</b> <a href="https://www.dropbox.com/s/dldnwm6sr5tv586/kepler_dr2_20arcsec.fits?dl=0">FITS (20" search radius)</a>, <a href="https://www.dropbox.com/s/v070hmvhm2ezjax/kepler_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a>, 
+          <a href="https://www.dropbox.com/s/xo1n12fxzgzybny/kepler_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
+        </p>
+        <p class="mb-4">
+          <b>K2:</b> <a href="https://www.dropbox.com/s/a92sh46a9we2kzd/k2_dr2_20arcsec.fits?dl=0">FITS (20" search radius)</a>, <a href="https://www.dropbox.com/s/ahrunxv1jxzkolr/k2_dr2_4arcsec.fits?dl=0">FITS (4" search radius)</a>, <a href="https://www.dropbox.com/s/pf1bw7xcnk61p73/k2_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
+        </p>    
 		<p class="mb-4">
-			<b>DOWNLOAD DATA:</b> <a href="https://www.dropbox.com/s/idu1cyg2y9zfysj/exoplanets_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
-		</p>
-		<p class="mb-4">
-			This is a cross-match with the NASA Exoplanet Archive <code>exoplanets</code> catalog consisting of confirmed planet hosts; see <a href='https://exoplanetarchive.ipac.caltech.edu/docs/API_exoplanet_columns.html'>here</a> for detailed descriptions of the data columns. (Note that the <code>pl_name</code> column was constructed during the cross-match and may differ from the "most commonly used" name as supplied by NExSci.)
+			<b>CONFIRMED PLANETS:</b> <a href="https://www.dropbox.com/s/idu1cyg2y9zfysj/exoplanets_dr2_1arcsec.fits?dl=0">FITS (1" search radius)</a>
 		</p>
         </div>
       </div>
@@ -216,15 +190,43 @@
 		</p>
 		<p class="mb-4">
 			You can also export the table in <a href='http://docs.astropy.org/en/stable/api/astropy.table.Table.html#astropy.table.Table.write'>a variety of alternative formats</a> with the <code>data.write()</code> function or convert it to a pandas dataframe as <code>data.to_pandas()</code>.
-		</p>	
-		<p class="mb-4">
-			You can find a Jupyter notebook that I've been playing with (and using to make some plots on this website) <a href='https://github.com/megbedell/gaia-kepler.fun/blob/master/notebooks/demo.ipynb'>here</a>. If you want more information about how I made these tables, you can get the full cross-match instructions <a href='https://github.com/megbedell/gaia-kepler.fun/blob/master/scripts/HOWTO.md'>here</a>. This is an open-source project, so please feel free to fork & update on github!
-		</p>	
+		</p>		
         </div>
 	          </div>
 	        </div>
 	      </div>
-	    </section>
+      </section>
+      
+      <section id="faq">
+        <div class="container">
+	        <div class="row">
+	          <div class="col-lg-8 mx-auto text-center">
+	            <h2 class="section-heading">FAQ</h2>
+              <hr class="my-4">
+
+        <div class="col-lg-12 text-center">
+          <p class="mb-4">
+            <b>Why does a KIC have multiple Gaia matches?</b>
+            Gaia has significantly higher angular resolution and goes to fainter magnitudes than Kepler. This means that often what appears as a single point source in Kepler is resolved into multiple sources in Gaia. Multiple matches are a feature, not a bug!
+          </p>
+          <p class="mb-4">
+            <b>Why does a Gaia source have multiple KIC matches?</b>
+            In the case that both Kepler and Gaia resolve multiple sources within a small patch of the sky, it won't be obvious which Gaia ID matches with which KIC. In this case you may see multiple rows for each possible match.
+          </p>
+          <p class="mb-4">
+            <b>Which cross-match radius should I choose?</b>
+            This answer depends on your science goals. If you want a direct and high-confidence match between single Kepler sources and single Gaia sources, you want the "one-to-one" table. If you want to include Kepler sources that are resolved into multiple Gaia counterparts, the 1" or 4" radius cross-matches are the best choice. If you want to be aware of any Gaia source that may fall within the Kepler PSF for a given KIC, the 20" radius match will include them all.
+          </p>
+          <p class="mb-4">
+            <b>How was the one-to-one table made?</b>
+            KICs that made it into the one-to-one table have only one Gaia source within 1" (after propagating proper motion corrections to account for the difference in reference epoch between catalogs). Also, the match must have a (G - K) magnitude difference of less than 2 mag, and an angular separation between Gaia and Kepler sources of less than 1 arcsecond. This isn't a totally foolproof method but it should cut out most bad matches (at the slight penalty of dropping some good matches).
+            There are 2182 Kepler sources with one or more Gaia matches within 1" that got dropped from the one-to-one table one or more of the above reasons; you can still find them all in the 1" search radius cross-match catalog.
+          </p>   
+          <p class="mb-4">
+            <b>Why is there Gaia information missing from this table?</b>
+            The Gaia columns included in this cross-match are limited to the <code>gaia_source_lite</code> catalog. If you want more information or some auxilary data (e.g. RVS or XP spectra), currently you'll need to save the source IDs that you want and query <a href="https://gea.esac.esa.int/archive/">the Gaia archive</a> for them.
+          </p>        
+      </section>
 
     <section id="info">
       <div class="container">
@@ -238,10 +240,11 @@ the <i>Gaia</i>
 <a href="https://www.cosmos.esa.int/web/gaia/dpac/consortium">Data Processing and Analysis Consortium (DPAC)</a>. Funding
 for the DPAC has been provided by national institutions, in particular
 the institutions participating in the <i>Gaia</i> Multilateral Agreement.</p>
-			<p class="mb-4">Data on this website also come from the <i>Kepler</i> and <i>K2</i> missions, funding for which is provided by the NASA Science Mission directorate. Access to these catalogs was provided by the <a href="https://exoplanetarchive.ipac.caltech.edu">NASA Exoplanet Archive</a>, which is operated by the California Institute of Technology, under contract with the National Aeronautics and Space Administration under the Exoplanet Exploration Program.</p>
-			<p class="mb-4">We use the cross-match service and Vizier catalogue access tool provided by CDS, Strasbourg, France. We also use the <a href="https://doi.org/10.5281/zenodo.44961">astroquery</a> and <a href='https://arxiv.org/abs/1801.02634'>astropy</a> python packages.</p>
-            <p class="mb-4">Feel free to use these data as you wish, but please be sure to cite the relevant <i>Gaia</i> and/or <i>Kepler</i> sources in any resulting publications, as well as <a href="https://arxiv.org/abs/1804.10121">Bailer-Jones et al.</a> (if you use the distances). Should you wish to acknowledge this website, here is a suggested wording: <i>"This work made use of the gaia-kepler.fun crossmatch database created by Megan Bedell."</i></p>
-            <p class="mb-4">Questions? Complaints? Compliments? <a href="mailto:megbedell@gmail.com">Email</a> or <a href="https://www.twitter.com/meg_bedell">tweet</a> me!</p>
+			<p class="mb-4">Data on this website also come from the <i>Kepler</i> mission, funding for which is provided by the NASA Science Mission directorate. Access to these catalogs was provided by the <a href="https://exoplanetarchive.ipac.caltech.edu">NASA Exoplanet Archive</a>, which is operated by the California Institute of Technology, under contract with the National Aeronautics and Space Administration under the Exoplanet Exploration Program.</p>
+			<p class="mb-4">We use the <a href='https://arxiv.org/abs/1801.02634'>astropy</a> python package for processing.</p>
+			<p class="mb-4">This project was developed in part at the Gaia F&ecirc;te, held at the Flatiron institute Center for Computational Astrophysics in 2022 June.</p>      
+      <p class="mb-4">Feel free to use these data as you wish, but please be sure to cite the relevant <i>Gaia</i> and/or <i>Kepler</i> catalog papers in any resulting publications. Should you wish to acknowledge this website, here is a suggested wording: <i>"This work made use of the gaia-kepler.fun crossmatch database created by Megan Bedell."</i></p>
+            <p class="mb-4">Questions? Complaints? Compliments? <a href="mailto:mbedell@flatironinstitute.org">Email</a> or <a href="https://www.twitter.com/meg_bedell">tweet</a> me!</p>
             <p class="mb-4">Thanks for reading this. <a href="https://openpuppies.com">Here, have a puppy.</a></p>
           </div>
         </div>
