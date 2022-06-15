@@ -29,7 +29,7 @@ def clean_gaia_table(tbl, kepler=False, k2=False,exoplanets=False, ang_dist_key=
         if col in gaia_unit_map:
             if not isinstance(gaia_unit_map[col], u.UnrecognizedUnit): # unit is valid
                 tbl[col].unit = gaia_unit_map[col]    
-    tbl.rename_column('ref_epoch', 'gaia_ref_epoch')   
+    #tbl.rename_column('ref_epoch', 'gaia_ref_epoch')   
     tbl.rename_column('angdist', ang_dist_key)  
     tbl[ang_dist_key] = tbl[ang_dist_key].to(u.arcsec)
     tbl['pm_corrected'] = False
@@ -63,8 +63,8 @@ def make_full_tables(data_dir='../data/',kepler=False,k2=False,exoplanets=False)
     Combine and write out final tables
     """
     if kepler:
-        gaia_matches_file = data_dir+'kepler_30arcsec_gaia.fits'
-        dist_table_file = data_dir+'kepler_30arcsec_dist.fits'
+        gaia_matches_file = data_dir+'kepler-dr3-30arcsec.fits'
+        #dist_table_file = data_dir+'kepler_30arcsec_dist.fits'
         outfile_prefix = 'kepler_dr3_'
         
         '''
